@@ -2,6 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
+    
+    <data>
+        <variable
+                name="todoItem"
+                type="dev.vinicius.todoapp.domain.TodoItem" />
+    </data>
 
     <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -23,6 +29,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginStart="8dp"
+                    android:text="@{todoItem.name}"
                     app:layout_constraintTop_toTopOf="@+id/cl_todo_item"
                     app:layout_constraintStart_toStartOf="@+id/cl_todo_item"
                     tools:text="Titulo"
@@ -34,6 +41,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
+                    android:text="@{todoItem::formatDate}"
                     app:layout_constraintTop_toTopOf="@+id/cl_todo_item"
                     app:layout_constraintEnd_toEndOf="@+id/cl_todo_item"
                     tools:text="27/08"/>
