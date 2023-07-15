@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:text="@{todoItem.formatedDate}"
+                    android:text="@{todoItem.formattedDate}"
                     app:layout_constraintTop_toTopOf="@+id/cl_todo_item"
                     app:layout_constraintEnd_toEndOf="@+id/cl_todo_item"
                     tools:text="27/08"/>
