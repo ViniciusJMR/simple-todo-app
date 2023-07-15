@@ -14,9 +14,4 @@ data class TodoItem(
     val name: String,
     val creationDate: LocalDate,
     val description: String
-){
-    fun getFormatedDate(): String {
-        val dtf = DateTimeFormatter.ofPattern("dd/MM")
-        return creationDate.format(dtf)
-    }
-}
+)

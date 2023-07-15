@@ -6,7 +6,7 @@
     <data>
         <variable
                 name="todoItem"
-                type="dev.vinicius.todoapp.data.model.TodoItem" />
+                type="dev.vinicius.todoapp.domain.dto.TodoItemDTOOutput" />
 
         <variable
                 name="todoItemViewHolder"

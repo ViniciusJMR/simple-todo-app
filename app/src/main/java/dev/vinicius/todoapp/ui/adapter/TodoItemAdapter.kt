@@ -6,14 +6,15 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dev.vinicius.todoapp.databinding.TodoListItemBinding
 import dev.vinicius.todoapp.data.model.TodoItem
+import dev.vinicius.todoapp.domain.dto.TodoItemDTOOutput
 
-class TodoItemAdapter() : ListAdapter<TodoItem, TodoItemAdapter.ViewHolder>(DiffCallback()) {
+class TodoItemAdapter() : ListAdapter<TodoItemDTOOutput, TodoItemAdapter.ViewHolder>(DiffCallback()) {
 
     inner class ViewHolder(
         private val binding: TodoListItemBinding
     ) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(item: TodoItem){
+        fun bind(item: TodoItemDTOOutput){
             binding.todoItem = item
             binding.todoItemViewHolder = this
         }

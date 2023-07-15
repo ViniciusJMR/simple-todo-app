@@ -12,6 +12,7 @@ import dev.vinicius.todoapp.data.local.repository.Repository
 import dev.vinicius.todoapp.data.local.repository.impl.TodoItemRepository
 import dev.vinicius.todoapp.data.model.TodoItem
 import dev.vinicius.todoapp.domain.ListTodoItemUseCase
+import dev.vinicius.todoapp.domain.dto.TodoItemDTOOutput
 import dev.vinicius.todoapp.util.State
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
@@ -23,10 +24,9 @@ import javax.inject.Inject
 class TodoItemViewModel @Inject constructor(
     app: Application,
     private val listTodoItemUseCase: ListTodoItemUseCase,
-    private val repo: Repository<TodoItem>
 ): AndroidViewModel(app){
-    private val _todoList = MutableLiveData<State<List<TodoItem>>>()
-    val todoList: LiveData<State<List<TodoItem>>> = _todoList
+    private val _todoList = MutableLiveData<State<List<TodoItemDTOOutput>>>()
+    val todoList: LiveData<State<List<TodoItemDTOOutput>>> = _todoList
 
     fun getAll() {
         viewModelScope.launch {
