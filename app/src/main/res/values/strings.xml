@@ -3,5 +3,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="todo_list">Todo List</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txt_title_create_todo">Create a Todo</string>
+    <string name="txt_label_confirm">Confirm</string>
+    <string name="txt_label_name">Name</string>
+    <string name="txt_label_description">Description</string>
 </resources>

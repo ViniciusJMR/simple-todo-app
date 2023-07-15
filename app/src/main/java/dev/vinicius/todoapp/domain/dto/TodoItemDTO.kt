@@ -22,6 +22,6 @@ data class TodoItemDTOOutput (
 }
 
 data class TodoItemDTOInput (
-    val name: String,
-    val description: String
+    var name: String,
+    var description: String
 )
