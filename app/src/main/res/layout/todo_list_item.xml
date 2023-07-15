@@ -6,13 +6,19 @@
     <data>
         <variable
                 name="todoItem"
-                type="dev.vinicius.todoapp.domain.TodoItem" />
+                type="dev.vinicius.todoapp.data.model.TodoItem" />
+
+        <variable
+                name="todoItemViewHolder"
+                type="dev.vinicius.todoapp.ui.adapter.TodoItemAdapter.ViewHolder" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_margin="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:clickable="true"
             android:focusable="true"
             app:cardCornerRadius="16dp">
@@ -41,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:text="@{todoItem::formatDate}"
+                    android:text="@{todoItem.formatedDate}"
                     app:layout_constraintTop_toTopOf="@+id/cl_todo_item"
                     app:layout_constraintEnd_toEndOf="@+id/cl_todo_item"
                     tools:text="27/08"/>
