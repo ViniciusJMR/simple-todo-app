@@ -2,6 +2,9 @@
 <layout>
 
     <data>
+        <variable
+                name="fragment"
+                type="dev.vinicius.todoapp.ui.fragment.MainFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -35,6 +38,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
+                android:clickable="true"
+                android:onClick="@{fragment::goToCreateTodo}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:contentDescription="@string/txt_add_todo_item"
