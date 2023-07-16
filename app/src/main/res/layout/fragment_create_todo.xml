@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
                 name="todoItem"
                 type="dev.vinicius.todoapp.domain.dto.TodoItemDTOInput" />
+
+        <variable
+                name="fragment"
+                type="dev.vinicius.todoapp.ui.fragment.CreateTodoFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -22,7 +28,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:text="@string/txt_title_create_todo" />
-        
+
         <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tv_create_ti_name"
                 android:layout_width="match_parent"
@@ -33,11 +39,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:hint="@string/txt_label_name">
+
             <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:text="@={todoItem.name}"/>
+                    android:text="@={todoItem.name}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -50,25 +57,24 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:hint="@string/txt_label_description">
+
             <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:text="@={todoItem.name}"/>
+                    android:text="@={todoItem.description}" />
         </com.google.android.material.textfield.TextInputLayout>
-
 
 
         <com.google.android.material.button.MaterialButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
+                android:onClick="@{fragment::saveTodo}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:text="@string/txt_label_confirm"
-            />
-
+                android:text="@string/txt_label_confirm" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
