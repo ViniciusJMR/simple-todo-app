@@ -13,5 +13,6 @@ data class TodoItem(
     val id: Long = 0,
     val name: String,
     val creationDate: LocalDate,
+    val endDate: LocalDate?,
     val description: String
 )

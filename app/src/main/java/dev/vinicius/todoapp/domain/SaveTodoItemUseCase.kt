@@ -15,6 +15,7 @@ class SaveTodoItemUseCase @Inject constructor(
         val newTodoItem = TodoItem(
             name = param.name,
             creationDate = LocalDate.now(),
+            endDate = LocalDate.parse(param.endDate),
             description = param.description
         )
         return todoItemRepo.insert(newTodoItem)

@@ -72,7 +72,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:text="@{todoItem.name}"
                 android:hint="@string/label_date_mask"
                 app:startIconDrawable="@drawable/baseline_edit_calendar_24"
                 app:layout_constraintTop_toBottomOf="@id/tv_create_ti_description"
@@ -80,6 +79,7 @@
                 app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_show_date_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="date"

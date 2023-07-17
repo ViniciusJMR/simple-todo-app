@@ -29,6 +29,7 @@ class DatabaseModule {
             AppDatabase::class.java,
             "TodoDatabase"
         )
+            .addMigrations(AppDatabase.MIGRATION_1_2)
             .addTypeConverter(Converters())
             .build()
 

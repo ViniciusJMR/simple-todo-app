@@ -23,5 +23,6 @@ data class TodoItemDTOOutput (
 
 data class TodoItemDTOInput (
     var name: String = "",
-    var description: String = ""
+    var description: String = "",
+    var endDate: String = ""
 )

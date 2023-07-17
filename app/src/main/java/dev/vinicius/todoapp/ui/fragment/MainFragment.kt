@@ -61,7 +61,6 @@ class MainFragment : Fragment() {
                     view?.let { it1 -> Snackbar.make(it1, it.error.message ?: "Erro", Snackbar.LENGTH_LONG).show() }
                 }
                 is State.Loading -> {
-                    view?.let { it1 -> Snackbar.make(it1, "Carregando", Snackbar.LENGTH_SHORT).show() }
                 }
             }
         }
