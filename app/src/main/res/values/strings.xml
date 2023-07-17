@@ -8,4 +8,5 @@
     <string name="txt_label_name">Name</string>
     <string name="txt_label_description">Description</string>
     <string name="txt_add_todo_item">Add New Todo Item</string>
+    <string name="label_date_mask">dd/mm/yyyy</string>
 </resources>

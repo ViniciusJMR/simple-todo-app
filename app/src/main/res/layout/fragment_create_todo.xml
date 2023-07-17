@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -12,8 +14,7 @@
                 type="dev.vinicius.todoapp.ui.fragment.CreateTodoFragment" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".ui.fragment.CreateTodoFragment">
@@ -64,6 +65,27 @@
                     android:inputType="text"
                     android:text="@={todoItem.description}" />
         </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_show_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@{todoItem.name}"
+                android:hint="@string/label_date_mask"
+                app:startIconDrawable="@drawable/baseline_edit_calendar_24"
+                app:layout_constraintTop_toBottomOf="@id/tv_create_ti_description"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="date"
+                    android:text="@={todoItem.endDate}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
 
         <com.google.android.material.button.MaterialButton
