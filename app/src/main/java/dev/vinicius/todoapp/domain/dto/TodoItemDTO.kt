@@ -8,17 +8,20 @@ data class TodoItemDTOOutput (
     val id: Long,
     val name: String,
     val creationDate: LocalDate,
+    val endDate: LocalDate?,
     val description: String
 ){
 
     // Secondary constructor for mapping
     constructor(entity: TodoItem)
-            : this(entity.id, entity.name, entity.creationDate, entity.description)
+            : this(entity.id, entity.name, entity.creationDate, entity.endDate, entity.description)
 
     fun getFormattedDate(): String {
         val dtf = DateTimeFormatter.ofPattern("dd/MM")
         return creationDate.format(dtf)
     }
+
+    fun toEntity() = TodoItem(id, name, creationDate, endDate, description)
 }
 
 data class TodoItemDTOInput (
