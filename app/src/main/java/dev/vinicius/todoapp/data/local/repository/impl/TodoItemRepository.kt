@@ -3,6 +3,7 @@ package dev.vinicius.todoapp.data.local.repository.impl
 import dev.vinicius.todoapp.data.local.dao.TodoItemDao
 import dev.vinicius.todoapp.data.local.repository.Repository
 import dev.vinicius.todoapp.data.model.TodoItem
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
@@ -18,4 +19,15 @@ class TodoItemRepository @Inject constructor(
         todoItemDao.insert(item)
         emit(Unit)
     }
+
+    override suspend fun delete(item: TodoItem) = flow {
+        todoItemDao.delete(item)
+        emit(Unit)
+    }
+
+    override suspend fun update(item: TodoItem) = flow {
+        val newTodo = todoItemDao.update(item)
+        emit(newTodo)
+    }
+
 }
