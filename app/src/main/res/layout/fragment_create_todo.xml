@@ -83,6 +83,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="date"
+                    android:focusable="false"
+                    android:onClick="@{fragment::setupDatePicker}"
                     android:text="@={todoItem.endDate}" />
         </com.google.android.material.textfield.TextInputLayout>
 

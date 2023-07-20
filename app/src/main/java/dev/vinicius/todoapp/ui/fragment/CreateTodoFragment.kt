@@ -36,7 +36,6 @@ class CreateTodoFragment : Fragment() {
         binding.fragment = this
 
         setupObservers()
-        setupListeners()
         return binding.root
     }
     private fun setupObservers(){
@@ -59,13 +58,7 @@ class CreateTodoFragment : Fragment() {
         }
     }
 
-    private fun setupListeners(){
-        binding.txtShowDate.setStartIconOnClickListener {
-            setupDatePicker()
-        }
-    }
-
-    private fun setupDatePicker(){
+    fun setupDatePicker(v: View){
         val datePicker = MaterialDatePicker.Builder.datePicker().build()
         datePicker.show(parentFragmentManager, "MATERIAL_DATE_PICKER")
         datePicker.addOnPositiveButtonClickListener { millisecondsDate ->
