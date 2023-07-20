@@ -14,13 +14,10 @@ interface TodoItemDao  {
     @Query("SELECT * FROM TodoItem")
     suspend fun getAll(): List<TodoItem>
 
-    @Insert(onConflict= OnConflictStrategy.IGNORE)
+    @Insert(onConflict= OnConflictStrategy.REPLACE)
     suspend fun insert(newTodo: TodoItem)
 
     @Delete
     suspend fun delete(todo: TodoItem)
-
-    @Update
-    suspend fun update(newTodo: TodoItem): TodoItem
 
 }

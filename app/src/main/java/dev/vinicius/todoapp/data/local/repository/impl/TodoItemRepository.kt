@@ -25,9 +25,4 @@ class TodoItemRepository @Inject constructor(
         emit(Unit)
     }
 
-    override suspend fun update(item: TodoItem) = flow {
-        val newTodo = todoItemDao.update(item)
-        emit(newTodo)
-    }
-
 }
