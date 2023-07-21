@@ -21,6 +21,11 @@ data class TodoItemDTOOutput (
         return creationDate.format(dtf)
     }
 
+    fun getFormattedEndDate() : String? {
+        val dtf = DateTimeFormatter.ofPattern("dd/MM")
+        return endDate?.format(dtf)
+    }
+
     fun toEntity() = TodoItem(id, name, creationDate, endDate, description)
 }
 
