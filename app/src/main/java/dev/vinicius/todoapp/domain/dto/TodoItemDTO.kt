@@ -1,5 +1,6 @@
 package dev.vinicius.todoapp.domain.dto
 
+import dev.vinicius.todoapp.data.model.SubTodoItem
 import dev.vinicius.todoapp.data.model.TodoItem
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -32,5 +33,6 @@ data class TodoItemDTOOutput (
 data class TodoItemDTOInput (
     var name: String = "",
     var description: String = "",
-    var endDate: String = ""
+    var endDate: String = "",
+    val listSubTodoItem: MutableList<SubTodoItem> = mutableListOf()
 )
