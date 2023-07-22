@@ -16,7 +16,7 @@ data class TodoItemDTOOutput (
     constructor(entity: TodoItem)
             : this(entity.id, entity.name, entity.creationDate, entity.endDate, entity.description)
 
-    fun getFormattedDate(): String {
+    fun getFormattedCreationDate(): String {
         val dtf = DateTimeFormatter.ofPattern("dd/MM")
         return creationDate.format(dtf)
     }
