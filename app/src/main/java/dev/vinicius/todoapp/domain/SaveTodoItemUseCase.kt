@@ -1,5 +1,6 @@
 package dev.vinicius.todoapp.domain
 
+import dev.vinicius.todoapp.data.local.repository.impl.SubTodoItemRepository
 import dev.vinicius.todoapp.data.local.repository.impl.TodoItemRepository
 import dev.vinicius.todoapp.data.model.TodoItem
 import dev.vinicius.todoapp.domain.dto.TodoItemDTOInput
@@ -9,7 +10,8 @@ import java.time.LocalDate
 import javax.inject.Inject
 
 class SaveTodoItemUseCase @Inject constructor(
-    private val todoItemRepo: TodoItemRepository
+    private val todoItemRepo: TodoItemRepository,
+    private val subTodoItemRepo: SubTodoItemRepository
 ) : UseCase.NoSource<TodoItemDTOInput>() {
     override suspend fun execute(param: TodoItemDTOInput): Flow<Unit> {
         val newTodoItem = TodoItem(
@@ -18,6 +20,10 @@ class SaveTodoItemUseCase @Inject constructor(
             endDate = LocalDate.parse(param.endDate),
             description = param.description
         )
-        return todoItemRepo.insert(newTodoItem)
+        val inserted = todoItemRepo.insert(newTodoItem)
+
+        if(param.listSubTodoItem.isNotEmpty())
+            subTodoItemRepo.insertAll(param.listSubTodoItem)
+        return inserted
     }
 }
