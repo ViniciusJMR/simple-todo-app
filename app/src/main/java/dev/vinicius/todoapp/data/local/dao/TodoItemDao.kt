@@ -7,12 +7,16 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import dev.vinicius.todoapp.data.model.TodoItem
+import dev.vinicius.todoapp.data.model.TodoWithSubTodos
 
 @Dao
 interface TodoItemDao  {
 
     @Query("SELECT * FROM TodoItem")
     suspend fun getAll(): List<TodoItem>
+
+    @Query("SELECT * FROM TodoItem WHERE id=:todoId")
+    suspend fun getTodoWithSubTodos(todoId: Long): TodoWithSubTodos
 
     @Insert(onConflict= OnConflictStrategy.REPLACE)
     suspend fun insert(newTodo: TodoItem)
