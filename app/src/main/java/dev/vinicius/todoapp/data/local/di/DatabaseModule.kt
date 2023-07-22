@@ -22,6 +22,9 @@ class DatabaseModule {
     fun provideChannelDao(appDatabase: AppDatabase) = appDatabase.todoItemDao()
 
     @Provides
+    fun provideSubTodoDao(appDatabase: AppDatabase) = appDatabase.subTodoDao()
+
+    @Provides
     @Singleton
     fun provideAppDatabase(@ApplicationContext appContext: Context): AppDatabase =
         Room.databaseBuilder(
