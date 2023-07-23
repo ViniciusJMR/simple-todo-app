@@ -13,7 +13,7 @@ import dev.vinicius.todoapp.util.Converters
 
 @Database(
     entities = [TodoItem::class, SubTodoItem::class],
-    version = 2
+    version = 3
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase: RoomDatabase() {
@@ -24,6 +24,19 @@ abstract class AppDatabase: RoomDatabase() {
         val MIGRATION_1_2 = Migration(1,2) {
             it.execSQL(
                 "ALTER TABLE TodoItem ADD COLUMN endDate TEXT"
+            )
+        }
+        val MIGRATION_2_3 = Migration(2,3) {
+            it.execSQL(
+                "CREATE TABLE IF NOT EXISTS 'SubTodoItem' (" +
+                        "id INTEGER NOT NULL," +
+                        "parentTodoId INTEGER NOT NULL," +
+                        "name TEXT NOT NULL," +
+                        "done INTEGER NOT NULL," +
+                        "PRIMARY KEY(id)" +
+                        "FOREIGN KEY (parentTodoId) REFERENCES TodoItem(id)" +
+                        "ON DELETE CASCADE" +
+                        ")"
             )
         }
     }

@@ -32,7 +32,7 @@ class DatabaseModule {
             AppDatabase::class.java,
             "TodoDatabase"
         )
-            .addMigrations(AppDatabase.MIGRATION_1_2)
+            .addMigrations(AppDatabase.MIGRATION_1_2, AppDatabase.MIGRATION_2_3)
             .addTypeConverter(Converters())
             .build()
 
