@@ -28,7 +28,7 @@ abstract class AppDatabase: RoomDatabase() {
         }
         val MIGRATION_2_3 = Migration(2,3) {
             it.execSQL(
-                "CREATE TABLE IF NOT EXISTS 'SubTodoItem' (" +
+                "CREATE TABLE IF NOT EXISTS SubTodoItem (" +
                         "id INTEGER NOT NULL," +
                         "parentTodoId INTEGER NOT NULL," +
                         "name TEXT NOT NULL," +
