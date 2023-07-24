@@ -34,6 +34,8 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMainBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = this
+
         setupUI()
         setupObserver()
         return binding.root

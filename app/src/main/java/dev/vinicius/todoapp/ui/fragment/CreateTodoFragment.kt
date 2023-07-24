@@ -1,5 +1,6 @@
 package dev.vinicius.todoapp.ui.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import dev.vinicius.todoapp.R
 import dev.vinicius.todoapp.data.model.TodoItem
 import dev.vinicius.todoapp.databinding.FragmentCreateTodoBinding
 import dev.vinicius.todoapp.domain.dto.TodoItemDTOInput
@@ -23,34 +25,60 @@ import java.time.ZoneOffset
 @AndroidEntryPoint
 class CreateTodoFragment : Fragment() {
     private lateinit var binding: FragmentCreateTodoBinding
+    private val todoItem = TodoItemDTOInput()
 
-    private val createTodoViewModel by viewModels<CreateTodoViewModel> ()
+    private val createTodoViewModel by viewModels<CreateTodoViewModel>()
 
+    @SuppressLint("CommitTransaction")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentCreateTodoBinding.inflate(inflater, container, false)
-        binding.todoItem = TodoItemDTOInput()
+        binding.todoItem = todoItem
         binding.fragment = this
+
+        val subTodoListFragment = SubTodoListFragment().apply {
+            subTodoList = todoItem.listSubTodoItem
+
+            handleOnAddClick = { subTodo ->
+                todoItem.listSubTodoItem.add(subTodo)
+            }
+            handleOnDeleteClick = { subTodo ->
+                todoItem.listSubTodoItem.remove(subTodo)
+            }
+        }
+
+        val transaction = childFragmentManager.beginTransaction()
+        transaction.replace(R.id.fcv_create_todo_list, subTodoListFragment)
 
         setupObservers()
         return binding.root
     }
-    private fun setupObservers(){
-        createTodoViewModel.state.observe(viewLifecycleOwner){
-            when(it){
+
+    private fun setupObservers() {
+        createTodoViewModel.state.observe(viewLifecycleOwner) {
+            when (it) {
                 is State.Loading -> {}
-                is State.Error ->{
-                    view?.let{ it1 ->{
-                        Snackbar.make(it1, it.error.message ?: "Erro desconhecido", Snackbar.LENGTH_SHORT).show()
-                    }}
+                is State.Error -> {
+                    view?.let { it1 ->
+                        {
+                            Snackbar.make(
+                                it1,
+                                it.error.message ?: "Erro desconhecido",
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
                 }
-                is State.Success ->{
-                    view?.let{ it1 ->{
-                        Snackbar.make(it1, "Salvo", Snackbar.LENGTH_SHORT).show()
-                    }}
+
+                is State.Success -> {
+                    view?.let { it1 ->
+                        {
+                            Snackbar.make(it1, "Salvo", Snackbar.LENGTH_SHORT).show()
+                        }
+                    }
                     findNavController().navigateUp()
                     findNavController().popBackStack()
                 }
@@ -58,7 +86,7 @@ class CreateTodoFragment : Fragment() {
         }
     }
 
-    fun setupDatePicker(v: View){
+    fun setupDatePicker(v: View) {
         val datePicker = MaterialDatePicker.Builder.datePicker().build()
         datePicker.show(parentFragmentManager, "MATERIAL_DATE_PICKER")
         datePicker.addOnPositiveButtonClickListener { millisecondsDate ->
@@ -70,7 +98,7 @@ class CreateTodoFragment : Fragment() {
         }
     }
 
-    fun saveTodo(v:View){
+    fun saveTodo(v: View) {
         createTodoViewModel.save(binding.todoItem!!)
     }
 }
