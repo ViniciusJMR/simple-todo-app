@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class SaveTodoItemUseCase @Inject constructor(
     private val todoItemRepo: TodoItemRepository,
-    private val subTodoItemRepo: SubTodoItemRepository
+//    private val subTodoItemRepo: SubTodoItemRepository
 ) : UseCase.NoSource<TodoItemDTOInput>() {
     override suspend fun execute(param: TodoItemDTOInput): Flow<Unit> {
         val newTodoItem = TodoItem(
@@ -22,8 +22,8 @@ class SaveTodoItemUseCase @Inject constructor(
         )
         val inserted = todoItemRepo.insert(newTodoItem)
 
-        if(param.listSubTodoItem.isNotEmpty())
-            subTodoItemRepo.insertAll(param.listSubTodoItem)
+//        if(param.listSubTodoItem.isNotEmpty())
+//            subTodoItemRepo.insertAll(param.listSubTodoItem)
         return inserted
     }
 }

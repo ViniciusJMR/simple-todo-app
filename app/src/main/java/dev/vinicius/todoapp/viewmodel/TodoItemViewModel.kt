@@ -2,6 +2,7 @@ package dev.vinicius.todoapp.viewmodel
 
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -30,6 +31,7 @@ class TodoItemViewModel @Inject constructor(
                     _todoList.postValue(State.Loading)
                 }
                 .catch {
+                    Log.e("VIEWMODEL_TAG", it.message ?: "Erro Estranho")
                     _todoList.postValue(State.Error(it))
                 }
                 .collect{
