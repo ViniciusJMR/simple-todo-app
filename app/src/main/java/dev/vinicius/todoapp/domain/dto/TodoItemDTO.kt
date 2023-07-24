@@ -34,5 +34,5 @@ data class TodoItemDTOInput (
     var name: String = "",
     var description: String = "",
     var endDate: String = "",
-    val listSubTodoItem: MutableList<SubTodoItem> = mutableListOf()
+    val listSubTodoItem: MutableList<SubTodoItemShow> = mutableListOf()
 )

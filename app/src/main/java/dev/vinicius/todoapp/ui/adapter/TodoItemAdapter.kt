@@ -2,13 +2,13 @@ package dev.vinicius.todoapp.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dev.vinicius.todoapp.databinding.TodoListItemBinding
-import dev.vinicius.todoapp.data.model.TodoItem
 import dev.vinicius.todoapp.domain.dto.TodoItemDTOOutput
 
-class TodoItemAdapter() : ListAdapter<TodoItemDTOOutput, TodoItemAdapter.ViewHolder>(DiffCallback()) {
+class TodoItemAdapter() : ListAdapter<TodoItemDTOOutput, TodoItemAdapter.ViewHolder>(TodoDiffCallback()) {
 
     inner class ViewHolder(
         private val binding: TodoListItemBinding
@@ -30,4 +30,12 @@ class TodoItemAdapter() : ListAdapter<TodoItemDTOOutput, TodoItemAdapter.ViewHol
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
+}
+
+class TodoDiffCallback : DiffUtil.ItemCallback<TodoItemDTOOutput>(){
+    override fun areItemsTheSame(oldItem: TodoItemDTOOutput, newItem: TodoItemDTOOutput) =
+        oldItem == newItem
+
+    override fun areContentsTheSame(oldItem: TodoItemDTOOutput, newItem: TodoItemDTOOutput) =
+        oldItem.name == newItem.name
 }
