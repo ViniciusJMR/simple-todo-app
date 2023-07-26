@@ -88,7 +88,6 @@
                     android:text="@={todoItem.endDate}" />
         </com.google.android.material.textfield.TextInputLayout>
 
-<!--
         <TextView
                 android:id="@+id/tv_create_sub_todo_label"
                 android:layout_width="wrap_content"
@@ -111,6 +110,7 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_create_sub_todo_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
@@ -127,12 +127,13 @@
                 style="@style/Widget.Material3.Button.IconButton"
                 app:icon="@drawable/ic_add_24dp"
                 android:layout_marginEnd="32dp"
+                android:onClick="@{fragment::addSubTodo}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_create_sub_todo_label"
                 app:layout_constraintBottom_toBottomOf="@id/tv_create_sub_todo_label"
                 />
--->
 
+<!--
         <androidx.fragment.app.FragmentContainerView
                 android:name="dev.vinicius.todoapp.ui.fragment.SubTodoListFragment"
                 android:id="@+id/fcv_create_todo_list"
@@ -142,6 +143,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
 
                 />
+-->
         <com.google.android.material.button.MaterialButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

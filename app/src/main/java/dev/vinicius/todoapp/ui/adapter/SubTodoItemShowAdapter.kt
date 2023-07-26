@@ -37,8 +37,6 @@ class SubTodoItemAdapter : ListAdapter<SubTodoItemShow, SubTodoItemAdapter.ViewH
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
-
-
 }
 
 class SubTodoDiffCallback: DiffUtil.ItemCallback<SubTodoItemShow>(){

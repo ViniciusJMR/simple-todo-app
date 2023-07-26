@@ -7,7 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.vinicius.todoapp.domain.SaveTodoItemUseCase
+import dev.vinicius.todoapp.domain.dto.SubTodoItemShow
 import dev.vinicius.todoapp.domain.dto.TodoItemDTOInput
+import dev.vinicius.todoapp.domain.dto.TodoItemDTOOutput
 import dev.vinicius.todoapp.util.State
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -23,6 +25,9 @@ class CreateTodoViewModel @Inject constructor(
 
     private val _state = MutableLiveData<State<Unit>>()
     val state: LiveData<State<Unit>> = _state
+    val todoItem = MutableLiveData(TodoItemDTOInput())
+    private val _subTodoList = MutableLiveData<MutableList<SubTodoItemShow>?>(mutableListOf())
+    val subTodoList: LiveData<MutableList<SubTodoItemShow>?> = _subTodoList
 
     fun save(todo: TodoItemDTOInput){
         viewModelScope.launch {
@@ -37,5 +42,19 @@ class CreateTodoViewModel @Inject constructor(
                     _state.postValue(State.Success(it))
                 }
         }
+    }
+
+    fun addSubTodo(itemShow: SubTodoItemShow){
+        val list = subTodoList.value
+        list?.add(itemShow)
+        _subTodoList.postValue(list)
+    }
+
+    fun getSubTodoList() = subTodoList.value
+
+    fun deleteSubTodo(item: SubTodoItemShow){
+        val list = subTodoList.value
+        list?.remove(item)
+        _subTodoList.postValue(list)
     }
 }
