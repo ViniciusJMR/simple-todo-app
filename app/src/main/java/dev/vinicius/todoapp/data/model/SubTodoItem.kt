@@ -14,8 +14,8 @@ import androidx.room.PrimaryKey
     )]
 )
 data class SubTodoItem(
-    @PrimaryKey
-    val id: Long,
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0,
     val parentTodoId: Long,
     val name: String,
     val done: Boolean,
