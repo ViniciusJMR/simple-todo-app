@@ -29,9 +29,10 @@ class CreateTodoViewModel @Inject constructor(
     private val _subTodoList = MutableLiveData<MutableList<SubTodoItemShow>?>(mutableListOf())
     val subTodoList: LiveData<MutableList<SubTodoItemShow>?> = _subTodoList
 
-    fun save(todo: TodoItemDTOInput){
+    fun save(){
         viewModelScope.launch {
-            saveTodoItemUseCase(todo)
+            todoItem.value!!.subTodoList = subTodoList.value!!
+            saveTodoItemUseCase(todoItem.value!!)
                 .onStart {
                     _state.postValue(State.Loading)
                 }

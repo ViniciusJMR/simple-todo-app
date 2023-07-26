@@ -34,4 +34,5 @@ data class TodoItemDTOInput (
     var name: String = "",
     var description: String = "",
     var endDate: String = "",
+    var subTodoList: List<SubTodoItemShow> = listOf()
 )

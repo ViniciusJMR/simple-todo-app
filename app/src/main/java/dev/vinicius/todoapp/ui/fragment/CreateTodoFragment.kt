@@ -114,7 +114,7 @@ class CreateTodoFragment : Fragment() {
     }
 
     fun saveTodo(v: View) {
-        createTodoViewModel.save(binding.todoItem!!)
+        createTodoViewModel.save()
     }
 
     @SuppressLint("NotifyDataSetChanged")
