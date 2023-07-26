@@ -16,8 +16,8 @@ class TodoItemRepository @Inject constructor(
     }
 
     override suspend fun insert(item: TodoItem) = flow {
-        todoItemDao.insert(item)
-        emit(Unit)
+        val id = todoItemDao.insert(item)
+        emit(id)
     }
 
     override suspend fun delete(item: TodoItem) = flow {

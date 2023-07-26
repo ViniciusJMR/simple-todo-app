@@ -18,7 +18,7 @@ interface TodoItemDao  {
     suspend fun getTodoWithSubTodos(todoId: Long): TodoWithSubTodos
 
     @Insert(onConflict= OnConflictStrategy.REPLACE)
-    suspend fun insert(newTodo: TodoItem)
+    suspend fun insert(newTodo: TodoItem): Long
 
     @Delete
     suspend fun delete(todo: TodoItem)

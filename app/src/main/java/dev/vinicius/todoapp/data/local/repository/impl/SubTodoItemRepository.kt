@@ -12,7 +12,7 @@ class SubTodoItemRepository @Inject constructor(
 ): Repository<SubTodoItem>{
     override suspend fun insert(item: SubTodoItem) = flow {
         subTodoDao.insert(item)
-        emit(Unit)
+        emit(1L)
     }
 
     suspend fun insertAll(subTodoList: List<SubTodoItem>) = flow {
