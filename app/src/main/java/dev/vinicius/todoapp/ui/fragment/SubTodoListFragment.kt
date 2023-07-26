@@ -6,18 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import dev.vinicius.todoapp.databinding.FragmentSubTodoListBinding
 import dev.vinicius.todoapp.domain.dto.SubTodoItemShow
 import dev.vinicius.todoapp.ui.adapter.SubTodoItemAdapter
+import dev.vinicius.todoapp.viewmodel.CreateTodoViewModel
 
+// Not used. But analyse a way to use this fragment on create and detail
 class SubTodoListFragment: Fragment() {
 
     private lateinit var binding:FragmentSubTodoListBinding
 
     private val adapter by lazy { SubTodoItemAdapter() }
-    var subTodoList: MutableList<SubTodoItemShow> = mutableListOf()
 
+    var subTodoList: MutableList<SubTodoItemShow> = mutableListOf()
     var handleOnAddClick: (SubTodoItemShow) -> (Unit) = {}
     var handleOnDeleteClick: (SubTodoItemShow) -> (Unit) = {}
 
@@ -29,13 +33,27 @@ class SubTodoListFragment: Fragment() {
         binding.rvSubTodoList.layoutManager = layoutManager
         binding.lifecycleOwner = this
 
+
+        setupListener()
+
         return binding.root
     }
 
-    fun addSubTodo(v: View){
-        val x = SubTodoItemShow(0, "TESTE", false)
-        Log.d("ADD CLICKED", x.toString())
-        handleOnAddClick(x)
-        adapter.submitList(subTodoList)
+    private fun setupListener(){
+        binding.mbSubTodoAdd.setOnClickListener {
+            val x = SubTodoItemShow(0, "TESTE", false)
+            Snackbar.make(requireView(), "CLICADO", Snackbar.LENGTH_SHORT).show()
+            handleOnAddClick(x)
+            adapter.submitList(subTodoList)
+        }
+
     }
+
+//    fun addSubTodo(v: View){
+//        val x = SubTodoItemShow(0, "TESTE", false)
+//        Log.d("ADD CLICKED", x.toString())
+//        Snackbar.make(requireView(), "CLICADO", Snackbar.LENGTH_SHORT).show()
+//        handleOnAddClick(x)
+//        adapter.submitList(subTodoList)
+//    }
 }
