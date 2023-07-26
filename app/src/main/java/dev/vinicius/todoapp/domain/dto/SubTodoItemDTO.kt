@@ -3,9 +3,9 @@ package dev.vinicius.todoapp.domain.dto
 import dev.vinicius.todoapp.data.model.SubTodoItem
 
 data class SubTodoItemShow(
-    val id: Long,
-    val name: String,
-    val done: Boolean
+    var id: Long = 0,
+    var name: String,
+    var done: Boolean
 ){
     constructor(entity: SubTodoItem): this(entity.id, entity.name, entity.done)
 }

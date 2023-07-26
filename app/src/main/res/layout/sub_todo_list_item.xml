@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginStart="8dp"
-                    android:text="@{subTodoItem.name}"
+                    android:text="@={subTodoItem.name}"
                     app:layout_constraintTop_toTopOf="@+id/cl_todo_item"
                     app:layout_constraintStart_toEndOf="@+id/aib_sub_todo_item_delete"
                     tools:text="Titulo"
@@ -64,6 +64,7 @@
                     android:id="@+id/mcb_sub_todo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="@={subTodoItem.done}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     />
