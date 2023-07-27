@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.createViewModelLazy
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,12 +17,14 @@ import dev.vinicius.todoapp.databinding.FragmentDetailTodoBinding
 import dev.vinicius.todoapp.ui.adapter.SubTodoItemAdapter
 import dev.vinicius.todoapp.util.State
 import dev.vinicius.todoapp.viewmodel.DetailTodoViewModel
+import dev.vinicius.todoapp.viewmodel.SharedViewModel
 
 @AndroidEntryPoint
 class DetailTodoFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailTodoBinding
     private val detailTodoViewModel by viewModels<DetailTodoViewModel>()
+    private val sharedViewModel by activityViewModels<SharedViewModel>()
     private val adapter by lazy { SubTodoItemAdapter() }
 
     override fun onCreateView(
@@ -38,7 +41,9 @@ class DetailTodoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        detailTodoViewModel.getTodoDetail(7)
+
+        val id = sharedViewModel.getSelectedAsLong()
+        detailTodoViewModel.getTodoDetail(id)
     }
 
     private fun setupUI(){

@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.AndroidViewModel
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -15,6 +17,7 @@ import dev.vinicius.todoapp.R
 import dev.vinicius.todoapp.databinding.FragmentMainBinding
 import dev.vinicius.todoapp.ui.adapter.TodoItemAdapter
 import dev.vinicius.todoapp.util.State
+import dev.vinicius.todoapp.viewmodel.SharedViewModel
 import dev.vinicius.todoapp.viewmodel.TodoItemViewModel
 
 @AndroidEntryPoint
@@ -22,10 +25,12 @@ class MainFragment : Fragment() {
 
     private lateinit var binding: FragmentMainBinding
     private val todoItemViewModel by viewModels<TodoItemViewModel>()
+    private val sharedViewModel by activityViewModels<SharedViewModel>()
 
     private val adapter by lazy {
         TodoItemAdapter().apply {
-            onClickListener = {
+            onClickListener = { id ->
+                sharedViewModel.selectItem(id)
                 findNavController().navigate(R.id.action_mainFragment_to_detailTodoFragment)
             }
         }
