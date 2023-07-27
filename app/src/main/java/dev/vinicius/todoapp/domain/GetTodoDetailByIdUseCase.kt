@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class GetTodoDetailById @Inject constructor(
+class GetTodoDetailByIdUseCase @Inject constructor(
     private val todoItemRepository: TodoItemRepository
 ): UseCase<Long, TodoItemDTODetail> (){
     override suspend fun execute(param: Long): Flow<TodoItemDTODetail> = flow {
