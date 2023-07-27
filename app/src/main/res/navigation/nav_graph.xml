@@ -12,9 +12,16 @@
         <action
                 android:id="@+id/action_mainFragment_to_createTodoFragment"
                 app:destination="@id/createTodoFragment" />
+        <action
+                android:id="@+id/action_mainFragment_to_detailTodoFragment"
+                app:destination="@id/detailTodoFragment" />
     </fragment>
     <fragment
             android:id="@+id/createTodoFragment"
             android:name="dev.vinicius.todoapp.ui.fragment.CreateTodoFragment"
             android:label="CreateTodoFragment" />
+    <fragment
+            android:id="@+id/detailTodoFragment"
+            android:name="dev.vinicius.todoapp.ui.fragment.DetailTodoFragment"
+            android:label="DetailTodoFragment" />
 </navigation>

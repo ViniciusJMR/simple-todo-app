@@ -82,12 +82,12 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{todoItem.description}"
                     tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus feugiat est et massa tincidunt condimentum. Praesent a mollis nulla. Aliquam tempus mattis fringilla. Donec imperdiet nunc nec nulla consectetur pellentesque. Aliquam in semper urna. Sed a purus nec lorem molestie lacinia eu lobortis ex."
                     android:layout_margin="8dp"
                     />
 
         </com.google.android.material.card.MaterialCardView>
-<!--
         <TextView
                 android:id="@+id/tv_detail_sub_todo_label"
                 android:layout_width="wrap_content"
@@ -110,6 +110,7 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_detail_sub_todo_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
@@ -121,6 +122,7 @@
             />
 
         <com.google.android.material.button.MaterialButton
+                android:id="@+id/mb_detail_sub_todo_add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Button.IconButton"
@@ -130,7 +132,7 @@
                 app:layout_constraintTop_toTopOf="@id/tv_detail_sub_todo_label"
                 app:layout_constraintBottom_toBottomOf="@id/tv_detail_sub_todo_label"
             />
--->
+<!--
         <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/fcv_detail_todo_list"
                 android:layout_width="match_parent"
@@ -139,5 +141,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:name="dev.vinicius.todoapp.ui.fragment.SubTodoListFragment"
                 />
+        -->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
