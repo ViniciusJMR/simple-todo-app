@@ -22,9 +22,9 @@ data class TodoItemDTOOutput (
         return creationDate.format(dtf)
     }
 
-    fun getFormattedEndDate() : String? {
+    fun getFormattedEndDate() : String {
         val dtf = DateTimeFormatter.ofPattern("dd/MM")
-        return endDate?.format(dtf)
+        return endDate?.format(dtf) ?: ""
     }
 
     fun toEntity() = TodoItem(id, name, creationDate, endDate, description)
@@ -36,3 +36,9 @@ data class TodoItemDTOInput (
     var endDate: String = "",
     var subTodoList: List<SubTodoItemShow> = listOf()
 )
+
+data class TodoItemDTODetail (
+    var todoItemOutput:TodoItemDTOOutput? = null,
+    var subTodoList: MutableList<SubTodoItemShow>? = null
+){
+}

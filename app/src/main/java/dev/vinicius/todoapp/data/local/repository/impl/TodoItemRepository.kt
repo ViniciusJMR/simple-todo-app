@@ -15,10 +15,16 @@ class TodoItemRepository @Inject constructor(
         emit(todoItems)
     }
 
+    suspend fun getDetailTodoById(id: Long) = flow {
+        val todoDetail = todoItemDao.getTodoWithSubTodos(id)
+        emit(todoDetail)
+    }
+
     override suspend fun insert(item: TodoItem) = flow {
         val id = todoItemDao.insert(item)
         emit(id)
     }
+
 
     override suspend fun delete(item: TodoItem) = flow {
         todoItemDao.delete(item)
