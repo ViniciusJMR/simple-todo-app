@@ -1,6 +1,7 @@
 package dev.vinicius.todoapp.ui.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -10,6 +11,8 @@ import dev.vinicius.todoapp.domain.dto.TodoItemDTOOutput
 
 class TodoItemAdapter() : ListAdapter<TodoItemDTOOutput, TodoItemAdapter.ViewHolder>(TodoDiffCallback()) {
 
+    var onClickListener : (Long) -> (Unit) = {}
+
     inner class ViewHolder(
         private val binding: TodoListItemBinding
     ) : RecyclerView.ViewHolder(binding.root){
@@ -17,6 +20,10 @@ class TodoItemAdapter() : ListAdapter<TodoItemDTOOutput, TodoItemAdapter.ViewHol
         fun bind(item: TodoItemDTOOutput){
             binding.todoItem = item
             binding.todoItemViewHolder = this
+        }
+
+        fun onClick(v: View){
+            onClickListener(binding.todoItem!!.id)
         }
     }
 

@@ -23,7 +23,13 @@ class MainFragment : Fragment() {
     private lateinit var binding: FragmentMainBinding
     private val todoItemViewModel by viewModels<TodoItemViewModel>()
 
-    private val adapter by lazy { TodoItemAdapter()}
+    private val adapter by lazy {
+        TodoItemAdapter().apply {
+            onClickListener = {
+                findNavController().navigate(R.id.action_mainFragment_to_detailTodoFragment)
+            }
+        }
+    }
 
     fun goToCreateTodo(v: View){
         findNavController().navigate(R.id.action_mainFragment_to_createTodoFragment)
