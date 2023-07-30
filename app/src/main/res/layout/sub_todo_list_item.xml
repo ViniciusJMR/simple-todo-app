@@ -18,6 +18,7 @@
             android:layout_height="35dp"
             android:clickable="true"
             android:focusable="true"
+            android:onClick="@{subTodoItemViewHolder::onClick}"
             android:layout_marginBottom="4dp"
             app:cardCornerRadius="4dp">
 
@@ -46,7 +47,6 @@
                     app:layout_constraintStart_toStartOf="@id/cl_todo_item"
                     app:layout_constraintTop_toTopOf="parent"
                     android:contentDescription="@string/txt_delete_sub_item_description" />
-                />
 
             <TextView
                     android:id="@+id/tv_sub_todo_item_title"

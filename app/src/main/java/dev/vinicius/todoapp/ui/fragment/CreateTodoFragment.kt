@@ -2,16 +2,20 @@ package dev.vinicius.todoapp.ui.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import dev.vinicius.todoapp.R
 import dev.vinicius.todoapp.databinding.FragmentCreateTodoBinding
 import dev.vinicius.todoapp.domain.dto.SubTodoItemShow
 import dev.vinicius.todoapp.ui.adapter.SubTodoItemAdapter
@@ -28,6 +32,15 @@ class CreateTodoFragment : Fragment() {
         SubTodoItemAdapter().apply {
             handleOnDeleteClick =  {
                 createTodoViewModel.deleteSubTodo(it)
+            }
+
+            handleOnClick = { subTodo, position ->
+                setupDialog(subTodo.name){
+                    val list = createTodoViewModel.getSubTodoList()
+                    val item = list?.get(position)
+                    item?.name = it.text.toString()
+                    notifyItemChanged(position)
+                }
             }
         }
     }
@@ -113,14 +126,38 @@ class CreateTodoFragment : Fragment() {
         }
     }
 
+    private fun setupDialog(textOnEditText: String, onChange: (EditText) -> (Unit)){
+        val editText = EditText(activity)
+        editText.setText(textOnEditText)
+        context?.let {
+            val dialog = MaterialAlertDialogBuilder(it)
+                .setTitle(R.string.txt_new_sub_todo_label)
+                .setView(editText)
+                .setPositiveButton("OK") { _, _ ->
+                    onChange(editText)
+                }
+                .setNegativeButton("Cancel", null)
+                .create()
+
+            dialog.show()
+        }
+
+    }
+
     fun saveTodo(v: View) {
         createTodoViewModel.save()
     }
 
     @SuppressLint("NotifyDataSetChanged")
     fun addSubTodo(v: View) {
-        createTodoViewModel.addSubTodo(SubTodoItemShow(name="TESTE", done=false))
-        adapter.submitList(createTodoViewModel.getSubTodoList())
-        adapter.notifyDataSetChanged()
+//        createTodoViewModel.addSubTodo(SubTodoItemShow(name="TESTE", done=false))
+        setupDialog(""){editText ->
+            val text =  editText.text.toString()
+            createTodoViewModel.addSubTodo(SubTodoItemShow(name=text, done=false))
+            Log.d("DIALOG", "NEW DIALOG -> $text")
+            adapter.addSubTodo(createTodoViewModel.getSubTodoList())
+        }
     }
+
+
 }

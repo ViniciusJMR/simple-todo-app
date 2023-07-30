@@ -16,4 +16,5 @@
     <string name="txt_add">add</string>
     <string name="txt_delete_sub_item_description">Delete Sub Item</string>
     <string name="txt_end_date_label">End date</string>
+    <string name="txt_new_sub_todo_label">New Sub Todo</string>
 </resources>
