@@ -1,5 +1,6 @@
 package dev.vinicius.todoapp.ui.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,8 @@ class SubTodoItemAdapter : ListAdapter<SubTodoItemShow, SubTodoItemAdapter.ViewH
 
     var handleOnDeleteClick: (SubTodoItemShow) -> (Unit) = {}
 
+    var handleOnClick: (SubTodoItemShow, Int) -> Unit = { subTodo, i -> }
+
     inner class ViewHolder(
         private val binding: SubTodoListItemBinding
     ) : RecyclerView.ViewHolder(binding.root){
@@ -25,6 +28,16 @@ class SubTodoItemAdapter : ListAdapter<SubTodoItemShow, SubTodoItemAdapter.ViewH
             handleOnDeleteClick(getItem(adapterPosition))
             notifyItemRemoved(adapterPosition)
         }
+
+        fun onClick(v: View){
+            handleOnClick(getItem(adapterPosition), adapterPosition)
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun addSubTodo(list: List<SubTodoItemShow>?){
+        submitList(list)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
