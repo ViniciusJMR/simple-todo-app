@@ -16,6 +16,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import dev.vinicius.todoapp.R
 import dev.vinicius.todoapp.databinding.FragmentDetailTodoBinding
+import dev.vinicius.todoapp.domain.dto.SubTodoItemShow
 import dev.vinicius.todoapp.ui.adapter.SubTodoItemAdapter
 import dev.vinicius.todoapp.util.State
 import dev.vinicius.todoapp.viewmodel.DetailTodoViewModel
@@ -57,6 +58,7 @@ class DetailTodoFragment : Fragment() {
     ): View {
         binding = FragmentDetailTodoBinding.inflate(inflater, container, false)
 
+
         setupUI()
         setupObserver()
 
@@ -74,6 +76,8 @@ class DetailTodoFragment : Fragment() {
         binding.rvDetailSubTodoList.adapter = adapter
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.rvDetailSubTodoList.layoutManager = layoutManager
+
+        binding.fragment = this
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -128,6 +132,13 @@ class DetailTodoFragment : Fragment() {
                 .create()
 
             dialog.show()
+        }
+    }
+
+    fun addSubTodo(v: View){
+        setupDialog("") { editText ->
+            val text = editText.text.toString()
+            detailTodoViewModel.addSubTodo(SubTodoItemShow(name = text, done = false ))
         }
     }
 }
