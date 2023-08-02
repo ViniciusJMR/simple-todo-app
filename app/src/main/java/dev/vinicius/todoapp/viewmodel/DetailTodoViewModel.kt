@@ -7,7 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.vinicius.todoapp.domain.GetTodoDetailByIdUseCase
-import dev.vinicius.todoapp.domain.dto.TodoItemDTODetail
+import dev.vinicius.todoapp.domain.UpdateSubTodoItemUseCase
+import dev.vinicius.todoapp.domain.dto.SubTodoItemShow
+import dev.vinicius.todoapp.domain.dto.TodoItemDTOOutput
 import dev.vinicius.todoapp.util.State
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
@@ -17,24 +19,60 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailTodoViewModel @Inject constructor(
     app: Application,
-    private val getTodoDetailById: GetTodoDetailByIdUseCase
+    private val getTodoDetailById: GetTodoDetailByIdUseCase,
+    private val updateSubTodoItemUseCase: UpdateSubTodoItemUseCase
 ): AndroidViewModel(app){
 
-    private val _state = MutableLiveData<State<TodoItemDTODetail>>()
-    val state: LiveData<State<TodoItemDTODetail>> = _state
+    private val _stateTodo = MutableLiveData<State<TodoItemDTOOutput>>()
+    val stateTodo: LiveData<State<TodoItemDTOOutput>> = _stateTodo
+
+    private val _stateSubTodo = MutableLiveData<State<MutableList<SubTodoItemShow>>>()
+    val stateSubTodo = _stateSubTodo
 
     fun getTodoDetail(id:Long){
         viewModelScope.launch {
             getTodoDetailById(id)
                 .onStart {
-                    _state.postValue(State.Loading)
+                    _stateTodo.postValue(State.Loading)
+                    _stateSubTodo.postValue(State.Loading)
                 }
                 .catch {
-                    _state.postValue(State.Error(it))
+                    _stateTodo.postValue(State.Error(it))
+                    _stateSubTodo.postValue(State.Error(it))
                 }
                 .collect{
-                    _state.postValue(State.Success(it))
+                    _stateTodo.postValue(State.Success(it.todoItemOutput))
+                    _stateSubTodo.postValue(State.Success(it.subTodoList))
                 }
         }
     }
+
+    fun updateSubTodo(subTodo: SubTodoItemShow){
+        viewModelScope.launch {
+            updateSubTodoItemUseCase(subTodo)
+                .onStart {
+                    _stateSubTodo.postValue(State.Loading)
+                }
+                .catch {
+                    _stateSubTodo.postValue(State.Error(it))
+                }
+                .collect{ newSubTodo ->
+                    val list = getSubTodoList()
+                    val oldSubTodo = list?.find { subTodo ->
+                        subTodo.id == newSubTodo.id
+                    }
+                    oldSubTodo?.name = newSubTodo.name
+                    oldSubTodo?.done = newSubTodo.done
+
+                    _stateSubTodo.postValue(State.Success(list))
+                }
+        }
+    }
+
+    fun deleteSubTodo(todo: SubTodoItemShow){
+    }
+
+    fun getSubTodoList() =
+        (stateSubTodo.value as State.Success)
+            .response
 }

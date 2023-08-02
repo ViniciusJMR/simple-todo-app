@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import androidx.room.Transaction
 import dev.vinicius.todoapp.data.model.SubTodoItem
 
@@ -11,7 +12,7 @@ import dev.vinicius.todoapp.data.model.SubTodoItem
 interface SubTodoDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(subTodoItem: SubTodoItem)
+    suspend fun insert(subTodoItem: SubTodoItem): SubTodoItem
 
     @Transaction
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -19,4 +20,7 @@ interface SubTodoDao {
 
     @Delete
     suspend fun delete(subTodoItem:SubTodoItem)
+
+    @Query("SELECT * FROM SubTodoItem WHERE id=:id")
+    suspend fun getById(id: Long): SubTodoItem
 }

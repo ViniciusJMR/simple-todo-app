@@ -141,7 +141,6 @@ class CreateTodoFragment : Fragment() {
 
             dialog.show()
         }
-
     }
 
     fun saveTodo(v: View) {
