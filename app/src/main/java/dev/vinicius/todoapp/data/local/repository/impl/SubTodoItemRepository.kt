@@ -21,7 +21,8 @@ class SubTodoItemRepository @Inject constructor(
     }
 
     suspend fun insertReturnInserted(item: SubTodoItem) = flow {
-        val inserted = subTodoDao.insert(item)
+        val id = subTodoDao.insert(item)
+        val inserted = subTodoDao.getById(id)
         emit(inserted)
     }
 
@@ -33,7 +34,7 @@ class SubTodoItemRepository @Inject constructor(
     override suspend fun getAll(): Flow<List<SubTodoItem>> = flow {
     }
 
-    suspend fun getByid(id: Long) = flow {
+    suspend fun getById(id: Long) = flow {
         val subTodo = subTodoDao.getById(id)
         emit(subTodo)
     }

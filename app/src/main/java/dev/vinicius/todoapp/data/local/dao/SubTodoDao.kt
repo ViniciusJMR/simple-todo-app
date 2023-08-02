@@ -12,7 +12,7 @@ import dev.vinicius.todoapp.data.model.SubTodoItem
 interface SubTodoDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(subTodoItem: SubTodoItem): SubTodoItem
+    suspend fun insert(subTodoItem: SubTodoItem): Long
 
     @Transaction
     @Insert(onConflict = OnConflictStrategy.IGNORE)
