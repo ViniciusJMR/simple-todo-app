@@ -1,5 +1,6 @@
 package dev.vinicius.todoapp.ui.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -38,7 +39,6 @@ class DetailTodoFragment : Fragment() {
                     val item = list?.get(position)
                     item?.name = it.text.toString()
                     detailTodoViewModel.updateSubTodo(item!!)
-                    notifyItemChanged(position)
                 }
             }
         }
@@ -69,6 +69,7 @@ class DetailTodoFragment : Fragment() {
         binding.rvDetailSubTodoList.layoutManager = layoutManager
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun setupObserver() {
         detailTodoViewModel.stateTodo.observe(viewLifecycleOwner) {
             when (it) {
@@ -81,7 +82,6 @@ class DetailTodoFragment : Fragment() {
                             .show()
                     }
                 }
-
                 is State.Success -> {
                     binding.todoItem = it.response
                 }
@@ -101,6 +101,7 @@ class DetailTodoFragment : Fragment() {
                 }
                 is State.Success -> {
                     adapter.submitList(it.response)
+                    adapter.notifyDataSetChanged()
                 }
             }
         }

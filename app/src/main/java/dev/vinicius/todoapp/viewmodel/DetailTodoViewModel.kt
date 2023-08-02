@@ -49,6 +49,7 @@ class DetailTodoViewModel @Inject constructor(
 
     fun updateSubTodo(subTodo: SubTodoItemShow){
         viewModelScope.launch {
+            val oldList = getSubTodoList()
             updateSubTodoItemUseCase(subTodo)
                 .onStart {
                     _stateSubTodo.postValue(State.Loading)
@@ -57,14 +58,13 @@ class DetailTodoViewModel @Inject constructor(
                     _stateSubTodo.postValue(State.Error(it))
                 }
                 .collect{ newSubTodo ->
-                    val list = getSubTodoList()
-                    val oldSubTodo = list?.find { subTodo ->
+                    val oldSubTodo = oldList?.find { subTodo ->
                         subTodo.id == newSubTodo.id
                     }
                     oldSubTodo?.name = newSubTodo.name
                     oldSubTodo?.done = newSubTodo.done
 
-                    _stateSubTodo.postValue(State.Success(list))
+                    _stateSubTodo.postValue(State.Success(oldList))
                 }
         }
     }
