@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.vinicius.todoapp.domain.GetTodoDetailByIdUseCase
-import dev.vinicius.todoapp.domain.UpdateSubTodoItemUseCase
+import dev.vinicius.todoapp.domain.todousecase.GetTodoDetailByIdUseCase
+import dev.vinicius.todoapp.domain.subtodousecase.UpdateSubTodoItemUseCase
 import dev.vinicius.todoapp.domain.dto.SubTodoItemShow
 import dev.vinicius.todoapp.domain.dto.TodoItemDTOOutput
 import dev.vinicius.todoapp.util.State

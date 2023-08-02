@@ -1,4 +1,4 @@
-package dev.vinicius.todoapp.domain
+package dev.vinicius.todoapp.domain.todousecase
 
 import dev.vinicius.todoapp.data.local.repository.impl.TodoItemRepository
 import dev.vinicius.todoapp.domain.dto.TodoItemDTOInput

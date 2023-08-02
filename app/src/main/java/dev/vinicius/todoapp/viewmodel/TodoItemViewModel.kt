@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.vinicius.todoapp.domain.ListTodoItemUseCase
+import dev.vinicius.todoapp.domain.todousecase.ListTodoItemUseCase
 import dev.vinicius.todoapp.domain.dto.TodoItemDTOOutput
 import dev.vinicius.todoapp.util.State
 import kotlinx.coroutines.flow.catch

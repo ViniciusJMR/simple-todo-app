@@ -6,13 +6,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.vinicius.todoapp.domain.SaveTodoItemUseCase
+import dev.vinicius.todoapp.domain.todousecase.SaveTodoItemUseCase
 import dev.vinicius.todoapp.domain.dto.SubTodoItemShow
 import dev.vinicius.todoapp.domain.dto.TodoItemDTOInput
-import dev.vinicius.todoapp.domain.dto.TodoItemDTOOutput
 import dev.vinicius.todoapp.util.State
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject

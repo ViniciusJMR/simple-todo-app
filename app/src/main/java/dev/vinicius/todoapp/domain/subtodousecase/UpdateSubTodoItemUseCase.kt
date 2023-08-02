@@ -1,4 +1,4 @@
-package dev.vinicius.todoapp.domain
+package dev.vinicius.todoapp.domain.subtodousecase
 
 import android.util.Log
 import dev.vinicius.todoapp.data.local.repository.impl.SubTodoItemRepository
