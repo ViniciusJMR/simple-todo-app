@@ -25,8 +25,8 @@ class UpdateSubTodoItemUseCase @Inject constructor(
                 )
                 repository.insertReturnInserted(newSubTodoItem)
                     .collect{
-                        val subtodo = SubTodoItemShow(id = it.id, name = it.name,done=it.done)
-                        emit(subtodo)
+                        val subTodo = SubTodoItemShow(id = it.id, name = it.name,done=it.done)
+                        emit(subTodo)
                     }
             }
 
