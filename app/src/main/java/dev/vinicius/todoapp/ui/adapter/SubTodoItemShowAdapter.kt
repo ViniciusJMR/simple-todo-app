@@ -14,7 +14,9 @@ class SubTodoItemAdapter : ListAdapter<SubTodoItemShow, SubTodoItemAdapter.ViewH
 
     var handleOnDeleteClick: (SubTodoItemShow) -> (Unit) = {}
 
-    var handleOnClick: (SubTodoItemShow, Int) -> Unit = { subTodo, i -> }
+    var handleOnClick: (SubTodoItemShow, Int) -> Unit = { _, _ -> }
+
+    var handleOnCheckBoxClick: (SubTodoItemShow, Int) -> Unit = { _, _ -> }
 
     inner class ViewHolder(
         private val binding: SubTodoListItemBinding
@@ -31,6 +33,11 @@ class SubTodoItemAdapter : ListAdapter<SubTodoItemShow, SubTodoItemAdapter.ViewH
 
         fun onClick(v: View){
             handleOnClick(getItem(adapterPosition), adapterPosition)
+        }
+
+        fun onCheckBoxClick(v: View){
+            handleOnCheckBoxClick(getItem(adapterPosition), adapterPosition)
+            notifyItemChanged(adapterPosition)
         }
     }
 

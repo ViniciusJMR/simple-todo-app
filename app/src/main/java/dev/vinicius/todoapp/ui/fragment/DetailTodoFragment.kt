@@ -41,6 +41,13 @@ class DetailTodoFragment : Fragment() {
                     detailTodoViewModel.updateSubTodo(item!!)
                 }
             }
+
+            handleOnCheckBoxClick = { subTodo, position ->
+                val list = detailTodoViewModel.getSubTodoList()
+                val item = list?.get(position)
+                item?.done = subTodo.done
+                detailTodoViewModel.updateSubTodo(item!!)
+            }
         }
     }
 
