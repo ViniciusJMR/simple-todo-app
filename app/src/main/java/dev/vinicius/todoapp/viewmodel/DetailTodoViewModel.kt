@@ -10,8 +10,10 @@ import dev.vinicius.todoapp.domain.todousecase.GetTodoDetailByIdUseCase
 import dev.vinicius.todoapp.domain.subtodousecase.UpdateSubTodoItemUseCase
 import dev.vinicius.todoapp.domain.dto.SubTodoItemShow
 import dev.vinicius.todoapp.domain.dto.TodoItemDTOOutput
+import dev.vinicius.todoapp.domain.subtodousecase.SaveSubTodoUseCase
 import dev.vinicius.todoapp.util.State
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,7 +22,8 @@ import javax.inject.Inject
 class DetailTodoViewModel @Inject constructor(
     app: Application,
     private val getTodoDetailById: GetTodoDetailByIdUseCase,
-    private val updateSubTodoItemUseCase: UpdateSubTodoItemUseCase
+    private val updateSubTodoItemUseCase: UpdateSubTodoItemUseCase,
+    private val saveSubTodoUseCase: SaveSubTodoUseCase
 ): AndroidViewModel(app){
 
     private val _stateTodo = MutableLiveData<State<TodoItemDTOOutput>>()
@@ -69,10 +72,34 @@ class DetailTodoViewModel @Inject constructor(
         }
     }
 
+    fun addSubTodo(subTodo: SubTodoItemShow){
+        viewModelScope.launch {
+            val id = getTodo()!!.id
+            val pair = Pair(id, subTodo)
+            val list = getSubTodoList()
+            saveSubTodoUseCase(pair)
+                .onStart {
+                    _stateSubTodo.postValue(State.Loading)
+                }
+                .catch {
+                    _stateSubTodo.postValue(State.Error(it))
+                }
+                .collect{
+                    list?.add(it)
+                    _stateSubTodo.postValue(State.Success(list))
+                }
+        }
+
+    }
+
     fun deleteSubTodo(todo: SubTodoItemShow){
     }
 
     fun getSubTodoList() =
         (stateSubTodo.value as State.Success)
+            .response
+
+    fun getTodo() =
+        (stateTodo.value as State.Success)
             .response
 }
