@@ -9,12 +9,12 @@ import javax.inject.Inject
 
 class ListTodoItemUseCase @Inject constructor(
     private val todoItemRepo: TodoItemRepository
-): UseCase.NoParam<List<TodoItemDTOOutput>>() {
+): UseCase.NoParam<MutableList<TodoItemDTOOutput>>() {
 
-    override suspend fun execute(): Flow<List<TodoItemDTOOutput>> =
+    override suspend fun execute(): Flow<MutableList<TodoItemDTOOutput>> =
         todoItemRepo.getAll().map {
-            it.map {
-                TodoItemDTOOutput(it)
-            }
+            it.map { todoItem ->
+                TodoItemDTOOutput(todoItem)
+            }.toMutableList()
         }
 }
