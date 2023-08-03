@@ -83,16 +83,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_detail_description_label"
-            >
+                app:layout_constraintHorizontal_bias="1.0">
+
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{todoItem.description}"
                     tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus feugiat est et massa tincidunt condimentum. Praesent a mollis nulla. Aliquam tempus mattis fringilla. Donec imperdiet nunc nec nulla consectetur pellentesque. Aliquam in semper urna. Sed a purus nec lorem molestie lacinia eu lobortis ex."
-                    android:layout_margin="8dp"
-                    />
+                    android:layout_margin="8dp" />
 
         </com.google.android.material.card.MaterialCardView>
+
         <TextView
                 android:id="@+id/tv_detail_sub_todo_label"
                 android:layout_width="wrap_content"
@@ -106,6 +107,7 @@
 
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/cpi_detail_sub_todo_completion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"

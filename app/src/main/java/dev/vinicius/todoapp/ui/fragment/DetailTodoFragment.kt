@@ -113,6 +113,9 @@ class DetailTodoFragment : Fragment() {
                 is State.Success -> {
                     adapter.submitList(it.response)
                     adapter.notifyDataSetChanged()
+
+                    binding.cpiDetailSubTodoCompletion
+                        .progress = detailTodoViewModel.getSubTodoProgress()
                 }
             }
         }

@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import java.lang.Math.ceil
 import javax.inject.Inject
 
 @HiltViewModel
@@ -116,6 +117,22 @@ class DetailTodoViewModel @Inject constructor(
     fun getSubTodoList() =
         (stateSubTodo.value as State.Success)
             .response
+
+    fun getSubTodoProgress(): Int {
+        val list = getSubTodoList()
+        val ONE_HUNDRED_PERCENT = 100.0
+        var count = 0
+        list?.filter { it.done }?.forEach { _ ->
+            count++
+        }
+
+        if (count == 0)
+            return 0
+
+        val percentage = kotlin.math.ceil(ONE_HUNDRED_PERCENT / list!!.size * count)
+        return percentage.toInt()
+    }
+
 
     fun getTodo() =
         (stateTodo.value as State.Success)
