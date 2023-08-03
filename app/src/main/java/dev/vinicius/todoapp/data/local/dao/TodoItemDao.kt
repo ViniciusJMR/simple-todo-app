@@ -14,6 +14,9 @@ interface TodoItemDao  {
     @Query("SELECT * FROM TodoItem")
     suspend fun getAll(): List<TodoItem>
 
+    @Query("SELECT * FROM TodoItem WHERE id=:id")
+    suspend fun getById(id: Long): TodoItem
+
     @Query("SELECT * FROM TodoItem WHERE id=:todoId")
     suspend fun getTodoWithSubTodos(todoId: Long): TodoWithSubTodos
 
