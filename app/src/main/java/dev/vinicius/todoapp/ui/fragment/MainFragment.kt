@@ -1,16 +1,16 @@
 package dev.vinicius.todoapp.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.AndroidViewModel
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import dev.vinicius.todoapp.R
@@ -19,6 +19,7 @@ import dev.vinicius.todoapp.ui.adapter.TodoItemAdapter
 import dev.vinicius.todoapp.util.State
 import dev.vinicius.todoapp.viewmodel.SharedViewModel
 import dev.vinicius.todoapp.viewmodel.TodoItemViewModel
+
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
@@ -62,6 +63,27 @@ class MainFragment : Fragment() {
         binding.rvTodoList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
         binding.fragment = this
+
+        val helper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            0, ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(
+                viewHolder: RecyclerView.ViewHolder,
+                direction: Int
+            ) {
+                todoItemViewModel.deleteTodo(viewHolder.adapterPosition)
+            }
+        })
+
+        helper.attachToRecyclerView(binding.rvTodoList)
     }
 
     private fun setupObserver(){
@@ -69,6 +91,7 @@ class MainFragment : Fragment() {
             when(it){
                 is State.Success ->{
                     adapter.submitList(it.response)
+                    adapter.notifyDataSetChanged()
                 }
                 is State.Error -> {
                     view?.let { it1 -> Snackbar.make(it1, it.error.message ?: "Erro", Snackbar.LENGTH_LONG).show() }
