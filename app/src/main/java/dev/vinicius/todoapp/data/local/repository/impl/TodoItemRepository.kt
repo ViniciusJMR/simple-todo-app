@@ -19,6 +19,11 @@ class TodoItemRepository @Inject constructor(
         emit(todoItems)
     }
 
+    suspend fun getAllWithSubTodos() = flow {
+        val todoItems = todoItemDao.getAllTodoWithSubTodos()
+        emit(todoItems)
+    }
+
     suspend fun getDetailTodoById(id: Long) = flow {
         val todoDetail = todoItemDao.getTodoWithSubTodos(id)
         emit(todoDetail)

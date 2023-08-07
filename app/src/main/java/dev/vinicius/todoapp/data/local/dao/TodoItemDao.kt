@@ -20,6 +20,9 @@ interface TodoItemDao  {
     @Query("SELECT * FROM TodoItem WHERE id=:todoId")
     suspend fun getTodoWithSubTodos(todoId: Long): TodoWithSubTodos
 
+    @Query("SELECT * FROM TodoItem")
+    suspend fun getAllTodoWithSubTodos(): List<TodoWithSubTodos>
+
     @Insert(onConflict= OnConflictStrategy.REPLACE)
     suspend fun insert(newTodo: TodoItem): Long
 
