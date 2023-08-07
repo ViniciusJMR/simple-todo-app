@@ -29,7 +29,7 @@ class MainFragment : Fragment() {
     private val sharedViewModel by activityViewModels<SharedViewModel>()
 
     private val adapter by lazy {
-        TodoItemAdapter().apply {
+        TodoItemAdapter(requireContext()).apply {
             onClickListener = { id ->
                 sharedViewModel.selectItem(id)
                 findNavController().navigate(R.id.action_mainFragment_to_detailTodoFragment)
