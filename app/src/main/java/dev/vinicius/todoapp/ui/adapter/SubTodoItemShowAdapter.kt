@@ -18,12 +18,15 @@ class SubTodoItemAdapter : ListAdapter<SubTodoItemShow, SubTodoItemAdapter.ViewH
 
     var handleOnCheckBoxClick: (SubTodoItemShow, Int) -> Unit = { _, _ -> }
 
+    var options: (SubTodoListItemBinding) -> Unit = {}
+
     inner class ViewHolder(
         private val binding: SubTodoListItemBinding
     ) : RecyclerView.ViewHolder(binding.root){
         fun bind(item:SubTodoItemShow){
             binding.subTodoItem = item
             binding.subTodoItemViewHolder = this
+            options(binding)
         }
 
         fun onDelete(v: View){
