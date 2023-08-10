@@ -1,7 +1,13 @@
 package dev.vinicius.todoapp.ui.component
 
+import android.app.Activity
+import android.content.Context
+import android.widget.EditText
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dev.vinicius.todoapp.R
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -22,6 +28,27 @@ object Dialogs {
                 .toLocalDate()
 
             onPositive(date)
+        }
+    }
+
+    fun setupEditDialog(activity: FragmentActivity?,
+                        context: Context?,
+                        textOnEditText: String,
+                        onChange: (EditText) -> (Unit)
+    ){
+        val editText = EditText(activity)
+        editText.setText(textOnEditText)
+        context?.let {
+            val dialog = MaterialAlertDialogBuilder(it)
+                .setTitle(R.string.txt_new_sub_todo_label)
+                .setView(editText)
+                .setPositiveButton("OK") { _, _ ->
+                    onChange(editText)
+                }
+                .setNegativeButton("Cancel", null)
+                .create()
+
+            dialog.show()
         }
     }
 }
