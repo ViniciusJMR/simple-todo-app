@@ -14,10 +14,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.vinicius.todoapp.R
 import dev.vinicius.todoapp.databinding.FragmentEditTodoBinding
 import dev.vinicius.todoapp.domain.dto.TodoItemDTOInput
+import dev.vinicius.todoapp.ui.component.Dialogs
 import dev.vinicius.todoapp.util.State
 import dev.vinicius.todoapp.viewmodel.EditTodoViewModel
 import dev.vinicius.todoapp.viewmodel.SharedViewModel
 import java.time.Instant
+import java.time.LocalDate
 import java.time.ZoneId
 import java.time.ZoneOffset
 
@@ -76,14 +78,10 @@ class EditTodoFragment : Fragment() {
     }
 
     fun setupDatePicker(v: View) {
-        val datePicker = MaterialDatePicker.Builder.datePicker().build()
-        datePicker.show(parentFragmentManager, "MATERIAL_DATE_PICKER")
-        datePicker.addOnPositiveButtonClickListener { millisecondsDate ->
-            val date = Instant.ofEpochMilli(millisecondsDate)
-                .atZone(ZoneId.of("America/Sao_Paulo"))
-                .withZoneSameInstant(ZoneId.ofOffset("UTC", ZoneOffset.UTC))
-                .toLocalDate()
+        val onPositive: (LocalDate) -> Unit = { date ->
             binding.txtShowDateEdit.setText(date.toString())
         }
+
+        Dialogs.setupDatePickerDialog(parentFragmentManager, onPositive)
     }
 }
