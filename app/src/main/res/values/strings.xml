@@ -18,4 +18,5 @@
     <string name="txt_end_date_label">End date</string>
     <string name="txt_new_sub_todo_label">New Sub Todo</string>
     <string name="on_going_sub_to_do_label">On Going Sub To-do</string>
+    <string name="txt_title_edit_todo">Edit To-do</string>
 </resources>

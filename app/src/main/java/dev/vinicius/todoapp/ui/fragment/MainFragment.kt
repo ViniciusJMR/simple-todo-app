@@ -41,6 +41,10 @@ class MainFragment : Fragment() {
         findNavController().navigate(R.id.action_mainFragment_to_createTodoFragment)
     }
 
+    fun goToEditTodo(){
+        findNavController().navigate(R.id.action_mainFragment_to_editTodoFragment)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -64,7 +68,7 @@ class MainFragment : Fragment() {
 
         binding.fragment = this
 
-        val helper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+        val rightSwiperHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             0, ItemTouchHelper.RIGHT
         ) {
             override fun onMove(
@@ -83,7 +87,27 @@ class MainFragment : Fragment() {
             }
         })
 
-        helper.attachToRecyclerView(binding.rvTodoList)
+        val leftSwipeHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            0, ItemTouchHelper.LEFT
+        ){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val todoDetail = adapter.currentList[viewHolder.adapterPosition]
+                sharedViewModel.selectItem(todoDetail.todoItemOutput!!)
+                goToEditTodo()
+            }
+
+        })
+
+        rightSwiperHelper.attachToRecyclerView(binding.rvTodoList)
+        leftSwipeHelper.attachToRecyclerView(binding.rvTodoList)
     }
 
     private fun setupObserver(){

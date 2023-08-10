@@ -15,6 +15,9 @@
         <action
                 android:id="@+id/action_mainFragment_to_detailTodoFragment"
                 app:destination="@id/detailTodoFragment" />
+        <action
+                android:id="@+id/action_mainFragment_to_editTodoFragment"
+                app:destination="@id/editTodoFragment" />
     </fragment>
     <fragment
             android:id="@+id/createTodoFragment"
@@ -24,4 +27,8 @@
             android:id="@+id/detailTodoFragment"
             android:name="dev.vinicius.todoapp.ui.fragment.DetailTodoFragment"
             android:label="DetailTodoFragment" />
+    <fragment
+            android:id="@+id/editTodoFragment"
+            android:name="dev.vinicius.todoapp.ui.fragment.EditTodoFragment"
+            android:label="EditTodoFragment" />
 </navigation>
