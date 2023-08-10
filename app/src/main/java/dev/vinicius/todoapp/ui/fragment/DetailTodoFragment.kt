@@ -18,6 +18,7 @@ import dev.vinicius.todoapp.R
 import dev.vinicius.todoapp.databinding.FragmentDetailTodoBinding
 import dev.vinicius.todoapp.domain.dto.SubTodoItemShow
 import dev.vinicius.todoapp.ui.adapter.SubTodoItemAdapter
+import dev.vinicius.todoapp.ui.component.Dialogs
 import dev.vinicius.todoapp.util.State
 import dev.vinicius.todoapp.viewmodel.DetailTodoViewModel
 import dev.vinicius.todoapp.viewmodel.SharedViewModel
@@ -122,20 +123,7 @@ class DetailTodoFragment : Fragment() {
     }
 
     private fun setupDialog(textOnEditText: String, onChange: (EditText) -> (Unit)){
-        val editText = EditText(activity)
-        editText.setText(textOnEditText)
-        context?.let {
-            val dialog = MaterialAlertDialogBuilder(it)
-                .setTitle(R.string.txt_new_sub_todo_label)
-                .setView(editText)
-                .setPositiveButton("OK") { _, _ ->
-                    onChange(editText)
-                }
-                .setNegativeButton("Cancel", null)
-                .create()
-
-            dialog.show()
-        }
+        Dialogs.setupEditDialog(activity, context, textOnEditText, onChange)
     }
 
     fun addSubTodo(v: View){

@@ -124,20 +124,7 @@ class CreateTodoFragment : Fragment() {
     }
 
     private fun setupDialog(textOnEditText: String, onChange: (EditText) -> (Unit)){
-        val editText = EditText(activity)
-        editText.setText(textOnEditText)
-        context?.let {
-            val dialog = MaterialAlertDialogBuilder(it)
-                .setTitle(R.string.txt_new_sub_todo_label)
-                .setView(editText)
-                .setPositiveButton("OK") { _, _ ->
-                    onChange(editText)
-                }
-                .setNegativeButton("Cancel", null)
-                .create()
-
-            dialog.show()
-        }
+        Dialogs.setupEditDialog(activity, context, textOnEditText,onChange)
     }
 
     fun saveTodo(v: View) {
