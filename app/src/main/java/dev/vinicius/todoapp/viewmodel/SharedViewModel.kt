@@ -5,6 +5,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.vinicius.todoapp.data.model.TodoItem
+import dev.vinicius.todoapp.domain.dto.TodoItemDTOInput
+import dev.vinicius.todoapp.domain.dto.TodoItemDTOOutput
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,5 +22,7 @@ class SharedViewModel @Inject constructor(
     }
 
     fun getSelectedAsLong() = selectedItem.value as Long
+
+    fun getSelectedAsTodoItemOutput() = selectedItem.value as TodoItemDTOOutput
 
 }
