@@ -14,8 +14,13 @@
     </data>
 
     <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv_todo_list_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="8dp"
+            android:animateLayoutChanges="true"
             android:clickable="true"
             android:focusable="true"
             android:onClick="@{todoItemViewHolder::onClick}"
@@ -27,6 +32,7 @@
                 android:id="@+id/cl_todo_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
             >
 
             <com.google.android.material.button.MaterialButton
