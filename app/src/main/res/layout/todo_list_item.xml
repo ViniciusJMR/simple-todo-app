@@ -24,7 +24,6 @@
             android:clickable="true"
             android:focusable="true"
             android:onClick="@{todoItemViewHolder::onClick}"
-            app:cardCornerRadius="0dp"
             >
 
 
