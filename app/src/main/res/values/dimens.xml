@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="top_bar_menu">42dp</dimen>
+    <dimen name="todo_card">32dp</dimen>
+    <dimen name="sub_todo_card">16dp</dimen>
+</resources>
