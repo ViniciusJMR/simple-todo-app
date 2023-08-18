@@ -19,6 +19,7 @@
     <color name="dim_gray">#666174</color>
 
     <color name="backgroundColor">@color/onyx</color>
+    <color name="surfaceColor">@color/quartz</color>
     <color name="primaryColor">@color/aurometalsaurus</color>
     <color name="onPrimaryColor">@color/white</color>
     <color name="secondaryColor">@color/periwinkle_crayola</color>
