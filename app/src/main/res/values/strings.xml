@@ -19,4 +19,8 @@
     <string name="txt_new_sub_todo_label">New Sub Todo</string>
     <string name="on_going_sub_to_do_label">On Going Sub To-do</string>
     <string name="txt_title_edit_todo">Edit To-do</string>
+    <string name="txt_menu_label">menu</string>
+    <string name="txt_main_fragment_menu_description">Open menu</string>
+    <string name="txt_search_label">Search</string>
+    <string name="search_on_main_description">Search task on main menu</string>
 </resources>
