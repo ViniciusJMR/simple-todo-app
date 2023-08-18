@@ -27,6 +27,9 @@ class TodoItemViewModel @Inject constructor(
     private val _todoList = MutableLiveData<State<MutableList<TodoItemDTODetail>>>()
     val todoList: LiveData<State<MutableList<TodoItemDTODetail>>> = _todoList
 
+    private val _filteredTodoList = MutableLiveData<MutableList<TodoItemDTODetail>?>()
+    val filteredTodoList: LiveData<MutableList<TodoItemDTODetail>?> = _filteredTodoList
+
     private val _subTodoList = MutableLiveData<State<List<SubTodoItemShow>>>()
     val subTodoList: LiveData<State<List<SubTodoItemShow>>> = _subTodoList
 
@@ -68,8 +71,15 @@ class TodoItemViewModel @Inject constructor(
         }
     }
 
-
     fun getTodoList() =
         (todoList.value as State.Success)
             .response
+
+    fun filterTodoList(query: String){
+        val list = getTodoList()
+        val filteredList = list?.filter {
+            it.todoItemOutput?.name?.contains(query, true)!!
+        }?.toMutableList()
+        _filteredTodoList.postValue(filteredList)
+    }
 }
