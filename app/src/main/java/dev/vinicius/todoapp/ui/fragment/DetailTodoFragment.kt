@@ -33,7 +33,10 @@ class DetailTodoFragment : Fragment() {
     private val adapter by lazy {
         SubTodoItemAdapter().apply {
             handleOnDeleteClick = {
-                detailTodoViewModel.deleteSubTodo(it)
+                val title = getString(R.string.txt_confirmation)
+                Dialogs.setupDialog(context, title){
+                    detailTodoViewModel.deleteSubTodo(it)
+                }
             }
 
             handleOnClick = { subTodo, position ->
