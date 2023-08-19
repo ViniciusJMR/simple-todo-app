@@ -1,6 +1,7 @@
 package dev.vinicius.todoapp.ui.adapter
 
 import android.content.Context
+import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,7 +50,11 @@ class TodoItemAdapter(
 
             val filteredList = item.subTodoList?.filter { !it.done }
 
-            adapter.submitList(filteredList)
+            if (filteredList?.isNotEmpty() == true){
+                binding.mbTodoShow.visibility = View.VISIBLE
+                adapter.submitList(filteredList)
+            }
+
         }
 
         fun onClick(v: View){

@@ -40,6 +40,7 @@
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Button.IconButton"
                     app:icon="@drawable/baseline__arrow_down_24"
+                    android:visibility="invisible"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     android:onClick="@{todoItemViewHolder::onShow}"
