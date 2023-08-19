@@ -156,6 +156,20 @@ class DetailTodoFragment : Fragment() {
             getString(R.string.txt_today)
         }
 
+    fun handleOnClickEndDateClick(v: View){
+        binding.todoItem?.let { todo ->
+            var endDateText: String? = ""
+            if(binding.cDetailEndDate.text == todo.getFormattedEndDate()) {
+                val daysLeft = todo.getDaysLeft()
+                daysLeft?.let { days ->
+                    endDateText = getDaysLeftResource(days)
+                }
+            } else {
+                endDateText = todo.getFormattedEndDate()
+            }
+            binding.cDetailEndDate.text = endDateText
+        }
+    }
 
     fun addSubTodo(v: View) {
         setupDialog("") { editText ->
