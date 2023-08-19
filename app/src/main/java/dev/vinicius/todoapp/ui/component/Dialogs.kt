@@ -3,6 +3,7 @@ package dev.vinicius.todoapp.ui.component
 import android.app.Activity
 import android.content.Context
 import android.widget.EditText
+import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -51,4 +52,23 @@ object Dialogs {
             dialog.show()
         }
     }
+
+    fun setupDialog(
+                    context: Context?,
+                    title : String,
+                    onChange: () -> (Unit)
+    ){
+        context?.let {
+            val dialog = MaterialAlertDialogBuilder(it)
+                .setTitle(title)
+                .setPositiveButton("Continue") { _, _ ->
+                    onChange()
+                }
+                .setNegativeButton("Cancel", null)
+                .create()
+
+            dialog.show()
+        }
+    }
+
 }
