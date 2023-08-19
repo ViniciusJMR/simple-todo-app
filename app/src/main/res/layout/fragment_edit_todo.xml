@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:hint="@string/txt_end_date_label"
-                app:startIconDrawable="@drawable/baseline_edit_calendar_24"
+                app:startIconDrawable="@drawable/baseline_calendar_24"
                 app:layout_constraintTop_toBottomOf="@id/tv_edit_ti_description"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">

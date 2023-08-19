@@ -27,33 +27,41 @@
             <com.google.android.material.appbar.MaterialToolbar
                     android:id="@+id/mtb_detail_top_bar"
                     app:title="@{todoItem.name}"
+                    tools:title="Nome"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:menu="@menu/detail_fragment_top_bar"
                     app:navigationIcon="@drawable/baseline_arrow_back_24"/>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <TextView
-                android:id="@+id/tv_detail_todo_creation_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@{todoItem.formattedCreationDate}"
+<!--        Text, Visibility and color set on fragment-->
+        <com.google.android.material.chip.ChipGroup
+                android:id="@+id/cg_detail_date"
                 app:layout_constraintTop_toBottomOf="@id/abl_detail_top_bar"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:text="11/07"
-                app:drawableStartCompat="@drawable/baseline_edit_calendar_24" />
-
-        <TextView
-                android:id="@+id/tv_detail_todo_end_date"
+                android:layout_marginStart="16dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@{todoItem.formattedEndDate}"
-                app:layout_constraintTop_toBottomOf="@id/abl_detail_top_bar"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:text="20/07"
-                app:drawableStartCompat="@drawable/baseline_edit_calendar_24" />
+                android:layout_height="wrap_content">
+
+            <com.google.android.material.chip.Chip
+                    android:id="@+id/c_detail_creation_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{todoItem.formattedCreationDate}"
+                    tools:text="01/07/22"
+                    app:chipIcon="@drawable/baseline_calendar_24"
+                    style="@style/Widget.Material3.Chip.Assist"/>
+
+            <com.google.android.material.chip.Chip
+                    android:id="@+id/c_detail_end_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:chipIcon="@drawable/baseline_calendar_24"
+                    style="@style/Widget.Material3.Chip.Assist"/>
+
+        </com.google.android.material.chip.ChipGroup>
+
 
 
         <androidx.constraintlayout.widget.Guideline

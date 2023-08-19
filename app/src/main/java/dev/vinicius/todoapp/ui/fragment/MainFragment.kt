@@ -73,7 +73,7 @@ class MainFragment : Fragment(){
 
         binding.mtbTopBar.setOnMenuItemClickListener { menuItem ->
             when(menuItem.itemId){
-                R.id.main_fragment_search -> {
+                R.id.main_menu_search -> {
                     val queryTextListener = object: SearchView.OnQueryTextListener{
                         override fun onQueryTextSubmit(query: String?): Boolean {
                             Log.d(TAG, query.toString())

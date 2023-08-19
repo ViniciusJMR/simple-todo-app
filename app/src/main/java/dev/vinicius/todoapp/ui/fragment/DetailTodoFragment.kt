@@ -11,7 +11,6 @@ import android.widget.EditText
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import dev.vinicius.todoapp.R
@@ -22,6 +21,7 @@ import dev.vinicius.todoapp.ui.component.Dialogs
 import dev.vinicius.todoapp.util.State
 import dev.vinicius.todoapp.viewmodel.DetailTodoViewModel
 import dev.vinicius.todoapp.viewmodel.SharedViewModel
+import kotlin.math.absoluteValue
 
 @AndroidEntryPoint
 class DetailTodoFragment : Fragment() {
@@ -31,12 +31,12 @@ class DetailTodoFragment : Fragment() {
     private val sharedViewModel by activityViewModels<SharedViewModel>()
     private val adapter by lazy {
         SubTodoItemAdapter().apply {
-            handleOnDeleteClick =  {
+            handleOnDeleteClick = {
                 detailTodoViewModel.deleteSubTodo(it)
             }
 
             handleOnClick = { subTodo, position ->
-                setupDialog(subTodo.name){
+                setupDialog(subTodo.name) {
                     val list = detailTodoViewModel.getSubTodoList()
                     val item = list?.get(position)
                     item?.name = it.text.toString()
@@ -73,7 +73,7 @@ class DetailTodoFragment : Fragment() {
         detailTodoViewModel.getTodoDetail(id)
     }
 
-    private fun setupUI(){
+    private fun setupUI() {
         binding.rvDetailSubTodoList.adapter = adapter
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.rvDetailSubTodoList.layoutManager = layoutManager
@@ -94,8 +94,23 @@ class DetailTodoFragment : Fragment() {
                             .show()
                     }
                 }
+
                 is State.Success -> {
-                    binding.todoItem = it.response
+                    val todo = it.response
+                    binding.todoItem = todo
+                    binding.tvDetailDescription.text = todo?.description?.ifBlank {
+                        getString(R.string.txt_no_description)
+                    }
+
+
+                    val daysLeft = todo?.getDaysLeft()
+                    daysLeft?.let { days ->
+                        binding.cDetailEndDate.apply {
+                            visibility = View.VISIBLE
+                            text = getDaysLeftResource(days)
+                        }
+                    }
+
                 }
             }
         }
@@ -122,14 +137,30 @@ class DetailTodoFragment : Fragment() {
         }
     }
 
-    private fun setupDialog(textOnEditText: String, onChange: (EditText) -> (Unit)){
+    private fun setupDialog(textOnEditText: String, onChange: (EditText) -> (Unit)) {
         Dialogs.setupEditDialog(activity, context, textOnEditText, onChange)
     }
 
-    fun addSubTodo(v: View){
+    private fun getDaysLeftResource(days: Int) =
+        if (days == 1){
+            getString(R.string.txt_ends_one_day)
+        } else if (days == -1){
+            getString(R.string.txt_passed_one_day)
+        } else if (days > 0) {
+            getString(R.string.txt_ends_n_days)
+                .format(days)
+        } else if (days < 0) {
+            getString(R.string.txt_passed_n_days)
+                .format(days.absoluteValue)
+        } else {
+            getString(R.string.txt_today)
+        }
+
+
+    fun addSubTodo(v: View) {
         setupDialog("") { editText ->
             val text = editText.text.toString()
-            detailTodoViewModel.addSubTodo(SubTodoItemShow(name = text, done = false ))
+            detailTodoViewModel.addSubTodo(SubTodoItemShow(name = text, done = false))
         }
     }
 }
