@@ -3,6 +3,7 @@ package dev.vinicius.todoapp.domain.dto
 import dev.vinicius.todoapp.data.model.SubTodoItem
 import dev.vinicius.todoapp.data.model.TodoItem
 import java.time.LocalDate
+import java.time.Period
 import java.time.format.DateTimeFormatter
 
 data class TodoItemDTOOutput (
@@ -18,14 +19,21 @@ data class TodoItemDTOOutput (
             : this(entity.id, entity.name, entity.creationDate, entity.endDate, entity.description)
 
     fun getFormattedCreationDate(): String {
-        val dtf = DateTimeFormatter.ofPattern("dd/MM")
+        val dtf = DateTimeFormatter.ofPattern("dd/MM/yy")
         return creationDate.format(dtf)
     }
 
-    fun getFormattedEndDate() : String {
-        val dtf = DateTimeFormatter.ofPattern("dd/MM")
-        return endDate?.format(dtf) ?: ""
+    fun getFormattedEndDate() : String? {
+        val dtf = DateTimeFormatter.ofPattern("dd/MM/yy")
+        return endDate?.format(dtf)
     }
+
+    fun getDaysLeft() =
+        endDate?.let {
+            Period
+                .between(LocalDate.now(), endDate)
+                .days
+        }
 
     fun toEntity() = TodoItem(id, name, creationDate, endDate, description)
 }
