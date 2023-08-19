@@ -31,4 +31,5 @@
     <string name="txt_today">Today</string>
     <string name="txt_edit_label">Edit</string>
     <string name="txt_delete_label">Delete</string>
+    <string name="txt_confirmation">Are you sure?</string>
 </resources>

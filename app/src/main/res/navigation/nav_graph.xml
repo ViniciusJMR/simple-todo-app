@@ -26,7 +26,11 @@
     <fragment
             android:id="@+id/detailTodoFragment"
             android:name="dev.vinicius.todoapp.ui.fragment.DetailTodoFragment"
-            android:label="DetailTodoFragment" />
+            android:label="DetailTodoFragment" >
+        <action
+                android:id="@+id/action_detailTodoFragment_to_editTodoFragment"
+                app:destination="@id/editTodoFragment" />
+    </fragment>
     <fragment
             android:id="@+id/editTodoFragment"
             android:name="dev.vinicius.todoapp.ui.fragment.EditTodoFragment"
