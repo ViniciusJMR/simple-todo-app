@@ -55,6 +55,7 @@ class EditTodoFragment : Fragment() {
                     }
                 }
                 is State.Success -> {
+                    binding.todoItem?.id?.let { id -> sharedViewModel.selectItem(id) }
                     findNavController().navigateUp()
                 }
             }

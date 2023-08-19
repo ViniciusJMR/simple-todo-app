@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -62,6 +63,7 @@ class DetailTodoFragment : Fragment() {
 
         setupUI()
         setupObserver()
+        setupListener()
 
         return binding.root
     }
@@ -79,6 +81,29 @@ class DetailTodoFragment : Fragment() {
         binding.rvDetailSubTodoList.layoutManager = layoutManager
 
         binding.fragment = this
+    }
+
+    private fun setupListener() {
+        binding.mtbDetailTopBar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        binding.mtbDetailTopBar.setOnMenuItemClickListener { menuItem ->
+            when(menuItem.itemId){
+                R.id.detail_menu_edit -> {
+                    binding.todoItem?.let {
+                        sharedViewModel.selectItem(it)
+                    }
+                    findNavController().navigate(R.id.action_detailTodoFragment_to_editTodoFragment)
+                    true
+                }
+                R.id.detail_menu_delete -> {
+                    deleteTodo()
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -135,6 +160,24 @@ class DetailTodoFragment : Fragment() {
                 }
             }
         }
+
+        detailTodoViewModel.deleteState.observe(viewLifecycleOwner){
+            when(it) {
+                is State.Loading -> {}
+                is State.Error -> {
+                    Log.d("DETAIL", it.error.message.toString())
+                    view?.let { views ->
+                        Snackbar
+                            .make(views, "Error: ${it.error.message}", Snackbar.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+                is State.Success -> {
+                    findNavController().navigateUp()
+                }
+            }
+
+        }
     }
 
     private fun setupDialog(textOnEditText: String, onChange: (EditText) -> (Unit)) {
@@ -175,6 +218,15 @@ class DetailTodoFragment : Fragment() {
         setupDialog("") { editText ->
             val text = editText.text.toString()
             detailTodoViewModel.addSubTodo(SubTodoItemShow(name = text, done = false))
+        }
+    }
+
+    private fun deleteTodo() {
+        val title = getString(R.string.txt_confirmation)
+        Dialogs.setupDialog(context, title) {
+            binding.todoItem?.let {
+                detailTodoViewModel.deleteTodo(it.id)
+            }
         }
     }
 }
