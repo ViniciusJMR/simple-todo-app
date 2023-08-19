@@ -55,7 +55,6 @@ class EditTodoFragment : Fragment() {
                     }
                 }
                 is State.Success -> {
-                    binding.todoItem?.id?.let { id -> sharedViewModel.selectItem(id) }
                     findNavController().navigateUp()
                 }
             }
@@ -65,6 +64,8 @@ class EditTodoFragment : Fragment() {
     private fun setupUI(){
         binding.fragment = this
         val todoOutput = sharedViewModel.getSelectedAsTodoItemOutput()
+        // TODO: Change to livedata object on view model
+        sharedViewModel.selectItem(todoOutput.id)
         val todoInput = TodoItemDTOInput(
             todoOutput.id,
             todoOutput.name,
