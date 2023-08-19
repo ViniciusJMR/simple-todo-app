@@ -23,4 +23,12 @@
     <string name="txt_main_fragment_menu_description">Open menu</string>
     <string name="txt_search_label">Search</string>
     <string name="search_on_main_description">Search task on main menu</string>
+    <string name="txt_no_description">No Description</string>
+    <string name="txt_ends_n_days">%1$d days left</string>
+    <string name="txt_ends_one_day">1 day left</string>
+    <string name="txt_passed_n_days">%1$d days has passed</string>
+    <string name="txt_passed_one_day">1 day has passed</string>
+    <string name="txt_today">Today</string>
+    <string name="txt_edit_label">Edit</string>
+    <string name="txt_delete_label">Delete</string>
 </resources>
