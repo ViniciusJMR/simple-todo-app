@@ -12,6 +12,7 @@ import dev.vinicius.todoapp.domain.dto.SubTodoItemShow
 import dev.vinicius.todoapp.domain.dto.TodoItemDTOOutput
 import dev.vinicius.todoapp.domain.subtodousecase.DeleteSubTodoUseCase
 import dev.vinicius.todoapp.domain.subtodousecase.SaveSubTodoUseCase
+import dev.vinicius.todoapp.domain.todousecase.DeleteTodoItemUseCase
 import dev.vinicius.todoapp.util.State
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -26,14 +27,18 @@ class DetailTodoViewModel @Inject constructor(
     private val getTodoDetailById: GetTodoDetailByIdUseCase,
     private val updateSubTodoItemUseCase: UpdateSubTodoItemUseCase,
     private val saveSubTodoUseCase: SaveSubTodoUseCase,
-    private val deleteSubTodoUseCase: DeleteSubTodoUseCase
+    private val deleteSubTodoUseCase: DeleteSubTodoUseCase,
+    private val deleteTodoItemUseCase: DeleteTodoItemUseCase
 ): AndroidViewModel(app){
 
     private val _stateTodo = MutableLiveData<State<TodoItemDTOOutput>>()
     val stateTodo: LiveData<State<TodoItemDTOOutput>> = _stateTodo
 
     private val _stateSubTodo = MutableLiveData<State<MutableList<SubTodoItemShow>>>()
-    val stateSubTodo = _stateSubTodo
+    val stateSubTodo: LiveData<State<MutableList<SubTodoItemShow>>> = _stateSubTodo
+
+    private val _deleteState = MutableLiveData<State<Unit>>()
+    val deleteState: LiveData<State<Unit>> = _deleteState
 
     fun getTodoDetail(id:Long){
         viewModelScope.launch {
@@ -49,6 +54,21 @@ class DetailTodoViewModel @Inject constructor(
                 .collect{
                     _stateTodo.postValue(State.Success(it.todoItemOutput))
                     _stateSubTodo.postValue(State.Success(it.subTodoList))
+                }
+        }
+    }
+
+    fun deleteTodo(id: Long){
+        viewModelScope.launch {
+            deleteTodoItemUseCase(id)
+                .onStart {
+                    _deleteState.postValue(State.Loading)
+                }
+                .catch {
+                    _deleteState.postValue(State.Error(it))
+                }
+                .collect {
+                    _deleteState.postValue(State.Success(it))
                 }
         }
     }
