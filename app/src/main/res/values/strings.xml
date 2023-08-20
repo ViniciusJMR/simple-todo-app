@@ -3,22 +3,20 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="todo_list">Todo List</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="txt_title_create_todo">Create a Todo</string>
+    <string name="txt_title_create_todo">Create a Task</string>
     <string name="txt_label_confirm">Confirm</string>
     <string name="txt_label_name">Name</string>
     <string name="txt_label_description">Description</string>
     <string name="txt_add_todo_item">Add New Todo Item</string>
     <string name="label_date_mask">dd/mm/yyyy</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="txt_description_label">Description</string>
-    <string name="txt_sub_todos_label">Sub Todos</string>
+    <string name="txt_sub_todos_label">Sub Tasks</string>
     <string name="txt_add">add</string>
     <string name="txt_delete_sub_item_description">Delete Sub Item</string>
     <string name="txt_end_date_label">End date</string>
-    <string name="txt_new_sub_todo_label">New Sub Todo</string>
-    <string name="on_going_sub_to_do_label">On Going Sub To-do</string>
-    <string name="txt_title_edit_todo">Edit To-do</string>
+    <string name="txt_new_sub_todo_label">New Sub Task</string>
+    <string name="on_going_sub_to_do_label">On Going Sub Tasks</string>
+    <string name="txt_title_edit_todo">Edit Task</string>
     <string name="txt_menu_label">menu</string>
     <string name="txt_main_fragment_menu_description">Open menu</string>
     <string name="txt_search_label">Search</string>
