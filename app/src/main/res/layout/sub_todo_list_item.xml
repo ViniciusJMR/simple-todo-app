@@ -18,6 +18,7 @@
             android:layout_height="35dp"
             android:clickable="true"
             android:focusable="true"
+            android:layout_marginBottom="4dp"
             android:onClick="@{subTodoItemViewHolder::onClick}"
         >
 
@@ -39,8 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/mb_sub_todo_item_delete"
-                    app:icon="@drawable/ic__delete_24"
-                    app:iconTint="@color/black"
+                    app:icon="@drawable/round_close_24"
                     android:onClick="@{subTodoItemViewHolder::onDelete}"
                     style="@style/Widget.Material3.Button.IconButton"
                     app:layout_constraintStart_toStartOf="@id/cl_todo_item"

@@ -75,6 +75,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/md_todo_item"
                 />
 
             <com.google.android.material.divider.MaterialDivider
@@ -92,8 +93,8 @@
                     android:text="@string/on_going_sub_to_do_label"
                     app:layout_constraintTop_toBottomOf="@+id/md_todo_item"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     android:visibility="gone"
-                    android:layout_marginStart="8dp"
                     android:layout_marginTop="4dp"
                 />
 
