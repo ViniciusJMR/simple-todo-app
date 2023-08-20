@@ -18,14 +18,14 @@ class TodoItemAdapter(
     private val context: Context
 ) : ListAdapter<TodoItemDTODetail, TodoItemAdapter.ViewHolder>(TodoDiffCallback()) {
 
-    var onClickListener : (Long) -> (Unit) = {}
+    var onClickListener: (Long) -> (Unit) = {}
 
-    var onShowSubTodosListener : (Long) -> (Unit) = {}
+    var onShowSubTodosListener: (Long) -> (Unit) = {}
 
 
     inner class ViewHolder(
         private val binding: TodoListItemBinding
-    ) : RecyclerView.ViewHolder(binding.root){
+    ) : RecyclerView.ViewHolder(binding.root) {
         private val adapter by lazy {
             SubTodoItemAdapter()
                 .apply {
@@ -35,7 +35,10 @@ class TodoItemAdapter(
                     }
                 }
         }
-        fun bind(item: TodoItemDTODetail){
+
+        private var showingSubTodos = false
+
+        fun bind(item: TodoItemDTODetail) {
             binding.todoItem = item.todoItemOutput
             binding.todoItemViewHolder = this
             binding.rvTodoListSubTodo.adapter = adapter
@@ -43,39 +46,38 @@ class TodoItemAdapter(
                 LinearLayoutManager(
                     context,
                     LinearLayoutManager.VERTICAL,
-                   false
+                    false
                 )
 
             binding.cpiTodoCompletion.progress = getSubTodoProgress(item.subTodoList)
 
             val filteredList = item.subTodoList?.filter { !it.done }
 
-            if (filteredList?.isNotEmpty() == true){
+            if (filteredList?.isNotEmpty() == true) {
                 binding.mbTodoShow.visibility = View.VISIBLE
                 adapter.submitList(filteredList)
             }
 
         }
 
-        fun onClick(v: View){
+        fun onClick(v: View) {
             onClickListener(binding.todoItem!!.id)
         }
 
         fun onShow(v: View) {
             onShowSubTodosListener(binding.todoItem!!.id)
-            val rvVisibility = binding.rvTodoListSubTodo.visibility
-            binding.rvTodoListSubTodo.visibility =
-                if(rvVisibility == View.GONE)
-                    View.VISIBLE
-                else
-                    View.GONE
 
-            val tvVisibility = binding.tvOnGoingSubTodoTitle.visibility
-            binding.tvOnGoingSubTodoTitle.visibility =
-                if(tvVisibility == View.GONE)
-                    View.VISIBLE
-                else
+            val visibility =
+                if (showingSubTodos) {
                     View.GONE
+                } else {
+                    View.VISIBLE
+                }
+
+            showingSubTodos = !showingSubTodos
+            binding.rvTodoListSubTodo.visibility = visibility
+            binding.tvOnGoingSubTodoTitle.visibility = visibility
+
         }
 
         private fun getSubTodoProgress(list: MutableList<SubTodoItemShow>?): Int {
@@ -102,10 +104,10 @@ class TodoItemAdapter(
     }
 }
 
-class TodoDiffCallback : DiffUtil.ItemCallback<TodoItemDTODetail>(){
-    override fun areItemsTheSame(oldItem: TodoItemDTODetail, newItem:TodoItemDTODetail) =
+class TodoDiffCallback : DiffUtil.ItemCallback<TodoItemDTODetail>() {
+    override fun areItemsTheSame(oldItem: TodoItemDTODetail, newItem: TodoItemDTODetail) =
         oldItem == newItem
 
-    override fun areContentsTheSame(oldItem:TodoItemDTODetail, newItem:TodoItemDTODetail) =
+    override fun areContentsTheSame(oldItem: TodoItemDTODetail, newItem: TodoItemDTODetail) =
         oldItem.todoItemOutput?.name == newItem.todoItemOutput?.name
 }
