@@ -39,6 +39,7 @@ class EditTodoFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         setupUI()
+        setupListener()
         setupObservers()
 
         return binding.root
@@ -74,6 +75,12 @@ class EditTodoFragment : Fragment() {
             todoOutput.endDate.toString(),
         )
         binding.todoItem = todoInput
+    }
+
+    private fun setupListener() {
+        binding.mtbEditTopBar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     fun saveTodo(v: View) {

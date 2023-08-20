@@ -78,6 +78,7 @@ class CreateTodoFragment : Fragment() {
 
         setupUI()
         setupObservers()
+        setupListener()
         return binding.root
     }
 
@@ -115,6 +116,12 @@ class CreateTodoFragment : Fragment() {
         binding.rvCreateSubTodoList.adapter = adapter
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.rvCreateSubTodoList.layoutManager = layoutManager
+    }
+
+    private fun setupListener() {
+        binding.mtbCreateTopBar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     fun setupDatePicker(v: View) {

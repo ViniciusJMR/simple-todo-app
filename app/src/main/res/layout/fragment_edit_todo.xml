@@ -17,25 +17,29 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".ui.fragment.CreateTodoFragment">
+        <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/abl_edit_top_bar"
+                android:layout_width="match_parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_height="wrap_content">
+            <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/mtb_edit_top_bar"
+                    app:title="@string/txt_title_edit_todo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:navigationIcon="@drawable/baseline_arrow_back_24"/>
+        </com.google.android.material.appbar.AppBarLayout>
 
         <!-- TODO: Update blank fragment layout -->
-        <TextView
-                android:id="@+id/tv_edit_ti_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="@string/txt_title_edit_todo" />
 
         <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tv_edit_ti_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_margin="16dp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_edit_ti_title"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/abl_edit_top_bar"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:hint="@string/txt_label_name">
@@ -71,6 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:hint="@string/txt_end_date_label"
                 app:startIconDrawable="@drawable/baseline_calendar_24"
                 app:layout_constraintTop_toBottomOf="@id/tv_edit_ti_description"
