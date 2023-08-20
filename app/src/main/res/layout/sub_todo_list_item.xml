@@ -19,7 +19,6 @@
             android:clickable="true"
             android:focusable="true"
             android:onClick="@{subTodoItemViewHolder::onClick}"
-            app:cardCornerRadius="0dp"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
