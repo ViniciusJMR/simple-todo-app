@@ -53,7 +53,7 @@ class MainFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMainBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         setupUI()
         setupListener()

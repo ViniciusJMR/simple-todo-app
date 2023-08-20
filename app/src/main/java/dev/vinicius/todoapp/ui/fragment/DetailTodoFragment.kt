@@ -62,6 +62,7 @@ class DetailTodoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentDetailTodoBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
 
 
         setupUI()

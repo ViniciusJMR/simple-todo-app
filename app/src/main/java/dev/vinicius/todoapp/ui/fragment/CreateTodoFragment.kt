@@ -55,6 +55,7 @@ class CreateTodoFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentCreateTodoBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
 
 
 //        val subTodoListFragment = SubTodoListFragment()

@@ -31,7 +31,7 @@ class SubTodoListFragment: Fragment() {
         binding.rvSubTodoList.adapter = adapter
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.rvSubTodoList.layoutManager = layoutManager
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
 
         setupListener()

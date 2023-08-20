@@ -36,6 +36,7 @@ class EditTodoFragment : Fragment() {
     ): View {
 
         binding = FragmentEditTodoBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
 
         setupUI()
         setupObservers()
