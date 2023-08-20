@@ -109,5 +109,5 @@ class TodoDiffCallback : DiffUtil.ItemCallback<TodoItemDTODetail>() {
         oldItem == newItem
 
     override fun areContentsTheSame(oldItem: TodoItemDTODetail, newItem: TodoItemDTODetail) =
-        oldItem.todoItemOutput?.name == newItem.todoItemOutput?.name
+        oldItem.todoItemOutput?.equals(newItem) ?: false
 }
