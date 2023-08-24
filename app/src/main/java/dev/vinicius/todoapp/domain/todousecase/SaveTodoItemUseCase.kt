@@ -9,6 +9,7 @@ import dev.vinicius.todoapp.util.UseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.time.LocalDate
+import java.time.format.DateTimeParseException
 import javax.inject.Inject
 
 class SaveTodoItemUseCase @Inject constructor(
@@ -16,11 +17,10 @@ class SaveTodoItemUseCase @Inject constructor(
     private val subTodoItemRepo: SubTodoItemRepository
 ) : UseCase.NoSource<TodoItemDTOInput>() {
     override suspend fun execute(param: TodoItemDTOInput): Flow<Unit> = flow {
-        val date: LocalDate? = if (param.endDate.isBlank() or param.endDate.isEmpty()){
-            null
-        }
-        else{
+        val date: LocalDate? = try {
             LocalDate.parse(param.endDate)
+        } catch (e: DateTimeParseException) {
+            null
         }
 
         val newTodoItem = TodoItem(
@@ -29,19 +29,14 @@ class SaveTodoItemUseCase @Inject constructor(
             endDate = date,
             description = param.description
         )
-        var inserted = 0L
-        todoItemRepo.insert(newTodoItem).collect{
-            inserted = it
+        todoItemRepo.insert(newTodoItem).collect { id ->
+            param.subTodoList
+                .map {
+                    SubTodoItem(parentTodoId = id, name = it.name, done = it.done)
+                }
+                .also { list ->
+                    subTodoItemRepo.insertAll(list).collect { emit(Unit) }
+                }
         }
-
-        val list = mutableListOf<SubTodoItem>()
-
-        if(param.subTodoList.isNotEmpty()){
-            param.subTodoList.forEach {
-                val subTodo = SubTodoItem(parentTodoId = inserted, name = it.name, done = it.done)
-                list.add(subTodo)
-            }
-        }
-        subTodoItemRepo.insertAll(list).collect{ emit(Unit)}
     }
 }
