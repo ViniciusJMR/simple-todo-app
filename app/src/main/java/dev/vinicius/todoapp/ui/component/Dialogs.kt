@@ -8,17 +8,21 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import dev.vinicius.todoapp.R
 import java.time.Instant
 import java.time.LocalDate
+import java.time.LocalTime
 import java.time.ZoneId
 import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
 object Dialogs {
     fun setupDatePickerDialog(
         parentFragmentManager: FragmentManager,
         onPositive: (LocalDate) -> (Unit) = {},
-        onNegative: (Unit) -> (Unit) = {}
+        onNegative: () -> (Unit) = {}
     ) {
         val datePicker = MaterialDatePicker.Builder.datePicker().build()
         datePicker.show(parentFragmentManager, "MATERIAL_DATE_PICKER")
@@ -30,7 +34,35 @@ object Dialogs {
 
             onPositive(date)
         }
+        datePicker.addOnNegativeButtonClickListener {
+            onNegative()
+        }
     }
+
+    /* Scraped idea for now
+    fun setupTimePicker(
+        parentFragmentManager: FragmentManager,
+        onPositive: (String) -> (Unit) = { },
+        onNegative: () -> (Unit) = {}
+
+    ){
+        val timePicker = MaterialTimePicker.Builder()
+            .setTimeFormat(TimeFormat.CLOCK_24H)
+            .setHour(0)
+            .setMinute(0)
+            .build()
+
+        timePicker.show(parentFragmentManager, "MATERIAL_TIME_PICKER")
+        timePicker.addOnPositiveButtonClickListener {
+            val dtf = DateTimeFormatter.ofPattern("HH:mm")
+            val localTime = LocalTime.of(timePicker.hour, timePicker.minute).format(dtf)
+            onPositive(localTime)
+        }
+        timePicker.addOnNegativeButtonClickListener{
+            onNegative()
+        }
+    }
+     */
 
     fun setupEditDialog(activity: FragmentActivity?,
                         context: Context?,
