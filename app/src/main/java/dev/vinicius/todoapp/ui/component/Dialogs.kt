@@ -1,39 +1,43 @@
 package dev.vinicius.todoapp.ui.component
 
-import android.app.Activity
 import android.content.Context
 import android.widget.EditText
-import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.timepicker.MaterialTimePicker
-import com.google.android.material.timepicker.TimeFormat
 import dev.vinicius.todoapp.R
+import java.text.SimpleDateFormat
 import java.time.Instant
 import java.time.LocalDate
-import java.time.LocalTime
 import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 object Dialogs {
     fun setupDatePickerDialog(
         parentFragmentManager: FragmentManager,
-        onPositive: (LocalDate) -> (Unit) = {},
+        onPositive: (String) -> (Unit) = {},
         onNegative: () -> (Unit) = {}
     ) {
-        val datePicker = MaterialDatePicker.Builder.datePicker().build()
+        val dtf = DateTimeFormatter.ofPattern("dd/MM/yy")
+
+        val datePicker = MaterialDatePicker.Builder
+            .datePicker()
+            .setNegativeButtonText(R.string.txt_erase)
+            .build()
         datePicker.show(parentFragmentManager, "MATERIAL_DATE_PICKER")
+
         datePicker.addOnPositiveButtonClickListener { millisecondsDate ->
             val date = Instant.ofEpochMilli(millisecondsDate)
                 .atZone(ZoneId.of("America/Sao_Paulo"))
                 .withZoneSameInstant(ZoneId.ofOffset("UTC", ZoneOffset.UTC))
                 .toLocalDate()
 
-            onPositive(date)
+            onPositive(date.format(dtf))
         }
+
         datePicker.addOnNegativeButtonClickListener {
             onNegative()
         }

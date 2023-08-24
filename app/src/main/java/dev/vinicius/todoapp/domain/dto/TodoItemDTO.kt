@@ -14,17 +14,17 @@ data class TodoItemDTOOutput (
     val description: String
 ){
 
+    private val dtf = DateTimeFormatter.ofPattern("dd/MM/yy")
+
     // Secondary constructor for mapping
     constructor(entity: TodoItem)
             : this(entity.id, entity.name, entity.creationDate, entity.endDate, entity.description)
 
     fun getFormattedCreationDate(): String {
-        val dtf = DateTimeFormatter.ofPattern("dd/MM/yy")
         return creationDate.format(dtf)
     }
 
     fun getFormattedEndDate() : String? {
-        val dtf = DateTimeFormatter.ofPattern("dd/MM/yy")
         return endDate?.format(dtf)
     }
 

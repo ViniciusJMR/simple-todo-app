@@ -11,21 +11,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import dev.vinicius.todoapp.R
 import dev.vinicius.todoapp.databinding.FragmentCreateTodoBinding
 import dev.vinicius.todoapp.domain.dto.SubTodoItemShow
 import dev.vinicius.todoapp.ui.adapter.SubTodoItemAdapter
 import dev.vinicius.todoapp.ui.component.Dialogs
 import dev.vinicius.todoapp.util.State
 import dev.vinicius.todoapp.viewmodel.CreateTodoViewModel
-import java.time.Instant
-import java.time.LocalDate
-import java.time.ZoneId
-import java.time.ZoneOffset
 
 @AndroidEntryPoint
 class CreateTodoFragment : Fragment() {
@@ -125,10 +118,15 @@ class CreateTodoFragment : Fragment() {
     }
 
     fun setupDatePicker(v: View) {
-        val onPositive: (LocalDate) -> Unit = { date ->
-            binding.txtShowDateEdit.setText(date.toString())
+        val onPositive: (String) -> Unit = { date ->
+            binding.txtShowDateEdit.setText(date)
         }
-        Dialogs.setupDatePickerDialog(parentFragmentManager, onPositive)
+
+        val onNegative: () -> Unit = {
+            binding.txtShowDateEdit.setText("")
+        }
+
+        Dialogs.setupDatePickerDialog(parentFragmentManager, onPositive, onNegative)
     }
 
     private fun setupDialog(textOnEditText: String, onChange: (EditText) -> (Unit)){

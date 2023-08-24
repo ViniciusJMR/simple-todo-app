@@ -9,6 +9,7 @@ import dev.vinicius.todoapp.util.UseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import javax.inject.Inject
 
@@ -18,7 +19,8 @@ class SaveTodoItemUseCase @Inject constructor(
 ) : UseCase.NoSource<TodoItemDTOInput>() {
     override suspend fun execute(param: TodoItemDTOInput): Flow<Unit> = flow {
         val date: LocalDate? = try {
-            LocalDate.parse(param.endDate)
+            val dtf = DateTimeFormatter.ofPattern("dd/MM/yy")
+            LocalDate.parse(param.endDate, dtf)
         } catch (e: DateTimeParseException) {
             null
         }

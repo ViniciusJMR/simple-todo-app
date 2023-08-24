@@ -72,7 +72,7 @@ class EditTodoFragment : Fragment() {
             todoOutput.id,
             todoOutput.name,
             todoOutput.description,
-            todoOutput.endDate.toString(),
+            todoOutput.getFormattedEndDate() ?: "",
         )
         binding.todoItem = todoInput
     }
@@ -88,10 +88,14 @@ class EditTodoFragment : Fragment() {
     }
 
     fun setupDatePicker(v: View) {
-        val onPositive: (LocalDate) -> Unit = { date ->
-            binding.txtShowDateEdit.setText(date.toString())
+        val onPositive: (String) -> Unit = { date ->
+            binding.txtShowDateEdit.setText(date)
         }
 
-        Dialogs.setupDatePickerDialog(parentFragmentManager, onPositive)
+        val onNegative: () -> Unit = {
+            binding.txtShowDateEdit.setText("")
+        }
+
+        Dialogs.setupDatePickerDialog(parentFragmentManager, onPositive, onNegative)
     }
 }
