@@ -236,16 +236,12 @@ class DetailTodoFragment : Fragment() {
 
     fun handleOnClickEndDateClick(v: View) {
         binding.todoItem?.let { todo ->
-            var endDateText: String? = ""
-            if (binding.cDetailEndDate.text == todo.getFormattedEndDate()) {
-                val daysLeft = todo.getDaysLeft()
-                daysLeft?.let { days ->
-
-                    endDateText = getDaysLeftResource(days)
+            val endDateText: String? =
+                if (binding.cDetailEndDate.text == todo.getFormattedEndDate()) {
+                    todo.getDaysLeftResource()
+                } else {
+                    todo.getFormattedEndDate()
                 }
-            } else {
-                endDateText = todo.getFormattedEndDate()
-            }
             binding.cDetailEndDate.text = endDateText
         }
     }

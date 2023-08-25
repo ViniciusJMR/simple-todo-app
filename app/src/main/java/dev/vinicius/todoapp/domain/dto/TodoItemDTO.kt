@@ -1,10 +1,13 @@
 package dev.vinicius.todoapp.domain.dto
 
+import dev.vinicius.todoapp.App
+import dev.vinicius.todoapp.R
 import dev.vinicius.todoapp.data.model.SubTodoItem
 import dev.vinicius.todoapp.data.model.TodoItem
 import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
+import kotlin.math.absoluteValue
 
 data class TodoItemDTOOutput (
     val id: Long,
@@ -34,6 +37,29 @@ data class TodoItemDTOOutput (
                 .between(LocalDate.now(), endDate)
                 .days
         }
+
+    fun getDaysLeftResource() : String{
+        val context = App.getContext()
+        val period = endDate?.let {
+            Period
+                .between(LocalDate.now(), endDate)
+                .days
+        }
+
+        var stringResource = ""
+        period?.let { days ->
+            stringResource = if (days == 0)
+                context.getString(R.string.txt_today)
+            else if (days > 0)
+                context.resources.getQuantityString(R.plurals.number_of_days_positive, days, days)
+            else
+                context.resources.getQuantityString(
+                    R.plurals.number_of_days_negative,
+                    days.absoluteValue,
+                    days.absoluteValue)
+        }
+        return stringResource
+    }
 
     fun toEntity() = TodoItem(id, name, creationDate, endDate, description)
 }
