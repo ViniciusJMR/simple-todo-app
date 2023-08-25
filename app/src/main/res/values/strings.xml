@@ -30,6 +30,7 @@
     <string name="txt_erase">Erase</string>
 
     <string name="txt_today">Today</string>
+    <string name="txt_add_sub_task">Add Sub Task</string>
     <plurals name="number_of_days_positive">
         <item quantity="one">1 day left</item>
         <item quantity="other">%1$d days left</item>

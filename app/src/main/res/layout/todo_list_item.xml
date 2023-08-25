@@ -13,18 +13,18 @@
                 type="dev.vinicius.todoapp.ui.adapter.TodoItemAdapter.ViewHolder" />
     </data>
 
-    <com.google.android.material.card.MaterialCardView
-            android:id="@+id/mcv_todo_list_item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginTop="8dp"
-            android:animateLayoutChanges="true"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="@{todoItemViewHolder::onClick}"
-            >
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--            android:id="@+id/mcv_todo_list_item"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="32dp"-->
+<!--            android:layout_marginEnd="32dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:animateLayoutChanges="true"-->
+<!--            android:clickable="true"-->
+<!--            android:focusable="true"-->
+<!--            android:onClick="@{todoItemViewHolder::onClick}"-->
+<!--            >-->
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,6 +32,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:animateLayoutChanges="true"
+                android:focusable="true"
+                android:clickable="true"
+                android:onClick="@{todoItemViewHolder::onClick}"
             >
 
             <com.google.android.material.button.MaterialButton
@@ -43,23 +46,23 @@
                     android:visibility="invisible"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:onClick="@{todoItemViewHolder::onShow}"
-                    />
+                    android:onClick="@{todoItemViewHolder::onShow}" />
 
             <TextView
                     android:id="@+id/tv_todo_item_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    style="@style/TextAppearance.AppCompat.Medium"
                     android:text="@{todoItem.name}"
-                    app:layout_constraintTop_toTopOf="@+id/mb_todo_show"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/mb_todo_show"
-                    tools:text="Titulo"
-                    />
+                    app:layout_constraintEnd_toStartOf="@id/cpi_todo_completion"
+                    tools:text="Titulo" />
 
             <TextView
-                    android:id="@+id/tv_todo_item_creation_date"
+                    android:id="@+id/tv_todo_item_end_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -74,16 +77,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/md_todo_item"
-                />
+                    app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.divider.MaterialDivider
                     android:id="@+id/md_todo_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    app:layout_constraintTop_toBottomOf="@+id/mb_todo_show"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_todo_item_end_date"
                 />
 
             <TextView
@@ -93,6 +94,7 @@
                     android:text="@string/on_going_sub_to_do_label"
                     app:layout_constraintTop_toBottomOf="@+id/md_todo_item"
                     app:layout_constraintStart_toStartOf="parent"
+                    style="@style/MaterialAlertDialog.Material3.Body.Text"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:visibility="gone"
                     android:layout_marginTop="4dp"
@@ -102,9 +104,9 @@
                     android:id="@+id/rv_todo_list_sub_todo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxHeight="100dp"
                     app:layout_constraintTop_toBottomOf="@+id/tv_on_going_sub_todo_title"
-                    android:layout_margin="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:visibility="gone"
                     tools:listitem="@layout/sub_todo_list_item"
                 />
@@ -112,5 +114,5 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
+<!--    </com.google.android.material.card.MaterialCardView>-->
 </layout>
