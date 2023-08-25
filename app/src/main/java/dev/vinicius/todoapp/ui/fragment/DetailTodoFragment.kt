@@ -27,6 +27,10 @@ import kotlin.math.absoluteValue
 @AndroidEntryPoint
 class DetailTodoFragment : Fragment() {
 
+    companion object {
+        private val TAG = "DETAILTODOFRAGMENT"
+    }
+
     private lateinit var binding: FragmentDetailTodoBinding
     private val detailTodoViewModel by viewModels<DetailTodoViewModel>()
     private val sharedViewModel by activityViewModels<SharedViewModel>()
@@ -34,7 +38,7 @@ class DetailTodoFragment : Fragment() {
         SubTodoItemAdapter().apply {
             handleOnDeleteClick = {
                 val title = getString(R.string.txt_confirmation)
-                Dialogs.setupDialog(context, title){
+                Dialogs.setupDialog(context, title) {
                     detailTodoViewModel.deleteSubTodo(it)
                 }
             }
@@ -88,12 +92,13 @@ class DetailTodoFragment : Fragment() {
     }
 
     private fun setupListener() {
+        /** TOP BAR MENU **/
         binding.mtbDetailTopBar.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
 
         binding.mtbDetailTopBar.setOnMenuItemClickListener { menuItem ->
-            when(menuItem.itemId){
+            when (menuItem.itemId) {
                 R.id.detail_menu_edit -> {
                     binding.todoItem?.let {
                         sharedViewModel.selectItem(it)
@@ -134,6 +139,7 @@ class DetailTodoFragment : Fragment() {
 
                     val daysLeft = todo?.getDaysLeft()
                     daysLeft?.let { days ->
+                        Log.d(TAG, "Days: $days")
                         binding.cDetailEndDate.apply {
                             visibility = View.VISIBLE
                             text = getDaysLeftResource(days)
@@ -155,18 +161,22 @@ class DetailTodoFragment : Fragment() {
                             .show()
                     }
                 }
+
                 is State.Success -> {
                     adapter.submitList(it.response)
                     adapter.notifyDataSetChanged()
 
                     binding.cpiDetailSubTodoCompletion
                         .progress = detailTodoViewModel.getSubTodoProgress()
+
+                    binding.tilDetailAddSubTodo.editText?.clearFocus()
+                    binding.tilDetailAddSubTodo.editText?.setText("")
                 }
             }
         }
 
-        detailTodoViewModel.deleteState.observe(viewLifecycleOwner){
-            when(it) {
+        detailTodoViewModel.deleteState.observe(viewLifecycleOwner) {
+            when (it) {
                 is State.Loading -> {}
                 is State.Error -> {
                     Log.d("DETAIL", it.error.message.toString())
@@ -176,6 +186,7 @@ class DetailTodoFragment : Fragment() {
                             .show()
                     }
                 }
+
                 is State.Success -> {
                     findNavController().navigateUp()
                 }
@@ -188,27 +199,38 @@ class DetailTodoFragment : Fragment() {
         Dialogs.setupEditDialog(activity, context, textOnEditText, onChange)
     }
 
-    private fun getDaysLeftResource(days: Int) =
-        if (days == 1){
-            getString(R.string.txt_ends_one_day)
-        } else if (days == -1){
-            getString(R.string.txt_passed_one_day)
-        } else if (days > 0) {
-            getString(R.string.txt_ends_n_days)
-                .format(days)
-        } else if (days < 0) {
-            getString(R.string.txt_passed_n_days)
-                .format(days.absoluteValue)
-        } else {
-            getString(R.string.txt_today)
-        }
+//    private fun getDaysLeftResource(days: Int) =
+//        if (days == 1) {
+//            getString(R.string.txt_ends_one_day)
+//        } else if (days == -1) {
+//            getString(R.string.txt_passed_one_day)
+//        } else if (days > 0) {
+//            getString(R.string.txt_ends_n_days)
+//                .format(days)
+//        } else if (days < 0) {
+//            getString(R.string.txt_passed_n_days)
+//                .format(days.absoluteValue)
+//        } else {
+//            getString(R.string.txt_today)
+//        }
 
-    fun handleOnClickEndDateClick(v: View){
+    private fun getDaysLeftResource(days: Int) =
+        if (days == 0)
+            getString(R.string.txt_today)
+        else if (days > 0)
+            resources.getQuantityString(R.plurals.number_of_days_positive, days, days)
+        else
+            resources.getQuantityString(R.plurals.number_of_days_negative,
+                days.absoluteValue,
+                days.absoluteValue)
+
+    fun handleOnClickEndDateClick(v: View) {
         binding.todoItem?.let { todo ->
             var endDateText: String? = ""
-            if(binding.cDetailEndDate.text == todo.getFormattedEndDate()) {
+            if (binding.cDetailEndDate.text == todo.getFormattedEndDate()) {
                 val daysLeft = todo.getDaysLeft()
                 daysLeft?.let { days ->
+
                     endDateText = getDaysLeftResource(days)
                 }
             } else {
