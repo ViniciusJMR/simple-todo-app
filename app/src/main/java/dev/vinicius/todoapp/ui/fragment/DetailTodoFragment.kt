@@ -106,13 +106,23 @@ class DetailTodoFragment : Fragment() {
                     findNavController().navigate(R.id.action_detailTodoFragment_to_editTodoFragment)
                     true
                 }
+
                 R.id.detail_menu_delete -> {
                     deleteTodo()
                     true
                 }
+
                 else -> false
             }
         }
+
+
+        /** SUB TASK **/
+        binding.tilDetailAddSubTodo.setEndIconOnClickListener {
+            val name = binding.tilDetailAddSubTodo.editText?.text.toString()
+            detailTodoViewModel.addSubTodo(name)
+        }
+
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -241,10 +251,11 @@ class DetailTodoFragment : Fragment() {
     }
 
     fun addSubTodo(v: View) {
-        setupDialog("") { editText ->
-            val text = editText.text.toString()
-            detailTodoViewModel.addSubTodo(SubTodoItemShow(name = text, done = false))
-        }
+
+//        setupDialog("") { editText ->
+//            val text = editText.text.toString()
+//            detailTodoViewModel.addSubTodo(SubTodoItemShow(name = text, done = false))
+//        }
     }
 
     private fun deleteTodo() {

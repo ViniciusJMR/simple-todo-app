@@ -95,9 +95,10 @@ class DetailTodoViewModel @Inject constructor(
         }
     }
 
-    fun addSubTodo(subTodo: SubTodoItemShow){
+    fun addSubTodo(subTodoName: String){
         viewModelScope.launch {
             val id = getTodo()!!.id
+            val subTodo = SubTodoItemShow(name=subTodoName, done = false)
             val pair = Pair(id, subTodo)
             val list = getSubTodoList()
             saveSubTodoUseCase(pair)
