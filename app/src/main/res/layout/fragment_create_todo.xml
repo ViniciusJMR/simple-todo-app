@@ -74,7 +74,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txt_show_date"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -82,7 +82,7 @@
                 app:startIconDrawable="@drawable/baseline_calendar_24"
                 app:layout_constraintTop_toBottomOf="@id/tv_create_ti_description"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintEnd_toEndOf="@+id/gl_create_todo">
 
             <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txt_show_date_edit"
@@ -94,11 +94,19 @@
                     android:text="@={todoItem.endDate}" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_create_todo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
         <TextView
                 android:id="@+id/tv_create_sub_todo_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
+                style="@style/Widget.Material3.CheckedTextView"
                 android:text="@string/txt_sub_todos_label"
                 app:layout_constraintTop_toBottomOf="@id/txt_show_date"
                 app:layout_constraintStart_toStartOf="parent"
@@ -130,7 +138,7 @@
         <com.google.android.material.button.MaterialButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Widget.Material3.Button.IconButton"
+                style="@style/Widget.Material3.Button.IconButton.Filled"
                 app:icon="@drawable/ic_add_24dp"
                 app:iconSize="25dp"
                 android:layout_marginEnd="32dp"

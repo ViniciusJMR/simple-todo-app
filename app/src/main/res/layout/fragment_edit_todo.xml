@@ -72,7 +72,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txt_show_date"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -80,7 +80,7 @@
                 app:startIconDrawable="@drawable/baseline_calendar_24"
                 app:layout_constraintTop_toBottomOf="@id/tv_edit_ti_description"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintEnd_toEndOf="@id/gl_edit_todo">
 
             <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txt_show_date_edit"
@@ -91,6 +91,13 @@
                     android:onClick="@{fragment::setupDatePicker}"
                     android:text="@={todoItem.endDate}" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_edit_todo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
 
 
         <com.google.android.material.button.MaterialButton
