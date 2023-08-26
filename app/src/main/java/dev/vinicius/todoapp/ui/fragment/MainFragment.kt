@@ -102,9 +102,9 @@ class MainFragment : Fragment(){
         binding.rvTodoList.adapter = adapter
         binding.rvTodoList.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.rvTodoList.itemAnimator?.changeDuration = 0
 
         binding.fragment = this
-
 
         setupSwipe()
     }
