@@ -175,8 +175,8 @@ class DetailTodoFragment : Fragment() {
                     adapter.submitList(it.response)
                     adapter.notifyDataSetChanged()
 
-                    binding.cpiDetailSubTodoCompletion
-                        .progress = detailTodoViewModel.getSubTodoProgress()
+//                    binding.cpiDetailSubTodoCompletion
+//                        .progress = detailTodoViewModel.getSubTodoProgress()
 
                     binding.tilDetailAddSubTodo.editText?.clearFocus()
                     binding.tilDetailAddSubTodo.editText?.setText("")
