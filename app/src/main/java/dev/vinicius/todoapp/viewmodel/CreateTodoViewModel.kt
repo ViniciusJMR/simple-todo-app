@@ -43,8 +43,9 @@ class CreateTodoViewModel @Inject constructor(
         }
     }
 
-    fun addSubTodo(itemShow: SubTodoItemShow){
+    fun addSubTodo(name: String){
         val list = subTodoList.value
+        val itemShow = SubTodoItemShow(name = name, done = false)
         list?.add(itemShow)
         _subTodoList.postValue(list)
     }

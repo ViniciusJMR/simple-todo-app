@@ -22,6 +22,9 @@ import dev.vinicius.todoapp.viewmodel.CreateTodoViewModel
 
 @AndroidEntryPoint
 class CreateTodoFragment : Fragment() {
+    companion object {
+        private val TAG = "CREATE TODO FRAGMENT"
+    }
     private lateinit var binding: FragmentCreateTodoBinding
     private val adapter by lazy {
         SubTodoItemAdapter().apply {
@@ -115,15 +118,22 @@ class CreateTodoFragment : Fragment() {
         binding.mtbCreateTopBar.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
+
+        binding.tilCreateAddSubTodo.setEndIconOnClickListener {
+            val name = binding.tilCreateAddSubTodo.editText?.text.toString()
+            createTodoViewModel.addSubTodo(name)
+            adapter.addSubTodo(createTodoViewModel.getSubTodoList())
+            binding.tilCreateAddSubTodo.editText?.setText("")
+        }
     }
 
     fun setupDatePicker(v: View) {
         val onPositive: (String) -> Unit = { date ->
-            binding.txtShowDateEdit.setText(date)
+            binding.edCreateTodoEndDate.setText(date)
         }
 
         val onNegative: () -> Unit = {
-            binding.txtShowDateEdit.setText("")
+            binding.edCreateTodoEndDate.setText("")
         }
 
         Dialogs.setupDatePickerDialog(parentFragmentManager, onPositive, onNegative)
@@ -140,12 +150,12 @@ class CreateTodoFragment : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     fun addSubTodo(v: View) {
 //        createTodoViewModel.addSubTodo(SubTodoItemShow(name="TESTE", done=false))
-        setupDialog(""){editText ->
-            val text =  editText.text.toString()
-            createTodoViewModel.addSubTodo(SubTodoItemShow(name=text, done=false))
-            Log.d("DIALOG", "NEW DIALOG -> $text")
-            adapter.addSubTodo(createTodoViewModel.getSubTodoList())
-        }
+//        setupDialog(""){editText ->
+//            val text =  editText.text.toString()
+//            createTodoViewModel.addSubTodo(SubTodoItemShow(name=text, done=false))
+//            Log.d("DIALOG", "NEW DIALOG -> $text")
+//            adapter.addSubTodo(createTodoViewModel.getSubTodoList())
+//        }
     }
 
 
