@@ -145,6 +145,7 @@ class DetailTodoFragment : Fragment() {
                     }
 
 
+                    binding.cDetailEndDate.visibility = View.GONE
                     val daysLeft = todo?.getDaysLeft()
                     daysLeft?.let { days ->
                         Log.d(TAG, "Days: $days")
