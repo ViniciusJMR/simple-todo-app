@@ -1,7 +1,6 @@
 package dev.vinicius.todoapp.ui.adapter
 
 import android.content.Context
-import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +8,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import dev.vinicius.todoapp.App
+import dev.vinicius.todoapp.R
 import dev.vinicius.todoapp.databinding.TodoListItemBinding
 import dev.vinicius.todoapp.domain.dto.SubTodoItemShow
 import dev.vinicius.todoapp.domain.dto.TodoItemDTODetail
-import dev.vinicius.todoapp.domain.dto.TodoItemDTOOutput
 
 class TodoItemAdapter(
     private val context: Context
@@ -22,11 +22,15 @@ class TodoItemAdapter(
 
     var onShowSubTodosListener: (Long) -> (Unit) = {}
 
+    companion object {
+        private val TAG = "TODOITEMADAPTER"
+    }
+
 
     inner class ViewHolder(
         private val binding: TodoListItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        private val adapter by lazy {
+        private val onGoingSubtodosAdapter by lazy {
             SubTodoItemAdapter()
                 .apply {
                     options = { binding ->
@@ -41,7 +45,7 @@ class TodoItemAdapter(
         fun bind(item: TodoItemDTODetail) {
             binding.todoItem = item.todoItemOutput
             binding.todoItemViewHolder = this
-            binding.rvTodoListSubTodo.adapter = adapter
+            binding.rvTodoListSubTodo.adapter = onGoingSubtodosAdapter
             binding.rvTodoListSubTodo.layoutManager =
                 LinearLayoutManager(
                     context,
@@ -49,13 +53,28 @@ class TodoItemAdapter(
                     false
                 )
 
-            binding.cpiTodoCompletion.progress = getSubTodoProgress(item.subTodoList)
 
-            val filteredList = item.subTodoList?.filter { !it.done }
+            val onGoingTasks =
+                item.subTodoList?.filter { !it.done }
 
-            if (filteredList?.isNotEmpty() == true) {
+            val completedTasks =
+                item.subTodoList?.filter { it.done }
+
+            if (onGoingTasks?.isNotEmpty() == true) {
                 binding.mbTodoShow.visibility = View.VISIBLE
-                adapter.submitList(filteredList)
+                onGoingSubtodosAdapter.submitList(onGoingTasks)
+            }
+
+            if (item.subTodoList?.isNotEmpty() == true){
+                val fullListSize = item.subTodoList?.size
+                val completedTasksSize = completedTasks?.size
+                binding.tvSubTodoLeft.text =
+                    App.getContext()
+                        .getString(
+                            R.string.txt_sub_task_progress,
+                            completedTasksSize,
+                            fullListSize
+                        )
             }
 
         }

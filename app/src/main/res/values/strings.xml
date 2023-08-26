@@ -29,6 +29,8 @@
     <string name="txt_no_hour_selected">No hour selected</string>
     <string name="txt_erase">Erase</string>
 
+    <string name="txt_sub_task_progress">%1$d/%2$d Sub Tasks</string>
+
     <string name="txt_today">Today</string>
     <string name="txt_add_sub_task">Add Sub Task</string>
     <plurals name="number_of_days_positive">

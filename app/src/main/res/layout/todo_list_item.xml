@@ -58,7 +58,7 @@
                     android:text="@{todoItem.name}"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/mb_todo_show"
-                    app:layout_constraintEnd_toStartOf="@id/cpi_todo_completion"
+                    app:layout_constraintEnd_toEndOf="parent"
                     tools:text="Titulo" />
 
             <TextView
@@ -68,16 +68,22 @@
                     android:layout_marginStart="8dp"
                     android:text="@{todoItem.daysLeftResource}"
                     android:textColor="@color/primaryColorDark"
-                    tools:text="days left"
+                    tools:text="Days left"
                     app:layout_constraintStart_toEndOf="@+id/mb_todo_show"
                     app:layout_constraintTop_toBottomOf="@+id/tv_todo_item_title" />
 
-            <com.google.android.material.progressindicator.CircularProgressIndicator
-                    android:id="@+id/cpi_todo_completion"
+            <TextView
+                    android:id="@+id/tv_sub_todo_left"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_marginStart="16dp"
+                    android:textColor="@color/primaryColorDark"
+                    app:layout_constraintStart_toEndOf="@+id/tv_todo_item_end_date"
+                    app:layout_constraintTop_toTopOf="@+id/tv_todo_item_end_date"
+                    tools:text="1/7 Sub tasks"
+
+                    />
+
 
             <com.google.android.material.divider.MaterialDivider
                     android:id="@+id/md_todo_item"
@@ -110,6 +116,7 @@
                     android:visibility="gone"
                     tools:listitem="@layout/sub_todo_list_item"
                 />
+
 
 
 
