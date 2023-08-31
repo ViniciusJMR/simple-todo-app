@@ -7,5 +7,7 @@ interface Repository<T> {
 
     suspend fun insert(item: T): Flow<Long>
 
+    suspend fun update(item: T): Flow<Unit>
+
     suspend fun delete(item: T): Flow<Unit>
 }

@@ -34,6 +34,10 @@ class SubTodoItemRepository @Inject constructor(
     override suspend fun getAll(): Flow<List<SubTodoItem>> = flow {
     }
 
+    override suspend fun update(item: SubTodoItem) = flow {
+        emit(Unit)
+    }
+
     suspend fun getById(id: Long) = flow {
         val subTodo = subTodoDao.getById(id)
         emit(subTodo)

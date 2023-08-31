@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import dev.vinicius.todoapp.data.model.TodoItem
 import dev.vinicius.todoapp.data.model.TodoWithSubTodos
+import java.time.LocalDate
 
 @Dao
 interface TodoItemDao  {
@@ -25,6 +26,9 @@ interface TodoItemDao  {
 
     @Insert(onConflict= OnConflictStrategy.REPLACE)
     suspend fun insert(newTodo: TodoItem): Long
+    
+    @Query("UPDATE todoItem SET name=:name, description=:description, endDate=:endDate WHERE id=:id" )
+    suspend fun update(id: Long, name: String, description: String, endDate: LocalDate?)
 
     @Delete
     suspend fun delete(todo: TodoItem)
