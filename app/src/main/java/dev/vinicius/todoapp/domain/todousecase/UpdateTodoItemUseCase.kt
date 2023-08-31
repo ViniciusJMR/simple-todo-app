@@ -35,7 +35,7 @@ class UpdateTodoItemUseCase @Inject constructor(
                         description = param.description
                     )
 
-                repository.insert(newTodo)
+                repository.update(newTodo)
                     .collect{
                         emit(Unit)
                     }
