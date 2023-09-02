@@ -13,8 +13,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import dev.vinicius.todoapp.R
 import dev.vinicius.todoapp.databinding.FragmentCreateTodoBinding
 import dev.vinicius.todoapp.domain.dto.SubTodoItemShow
+import dev.vinicius.todoapp.exception.TodoException
+import dev.vinicius.todoapp.exception.field.FieldError
 import dev.vinicius.todoapp.ui.adapter.SubTodoItemAdapter
 import dev.vinicius.todoapp.ui.component.Dialogs
 import dev.vinicius.todoapp.util.State
@@ -25,15 +28,16 @@ class CreateTodoFragment : Fragment() {
     companion object {
         private val TAG = "CREATE TODO FRAGMENT"
     }
+
     private lateinit var binding: FragmentCreateTodoBinding
     private val adapter by lazy {
         SubTodoItemAdapter().apply {
-            handleOnDeleteClick =  {
+            handleOnDeleteClick = {
                 createTodoViewModel.deleteSubTodo(it)
             }
 
             handleOnClick = { subTodo, position ->
-                setupDialog(subTodo.name){
+                setupDialog(subTodo.name) {
                     val list = createTodoViewModel.getSubTodoList()
                     val item = list?.get(position)
                     item?.name = it.text.toString()
@@ -80,9 +84,14 @@ class CreateTodoFragment : Fragment() {
 
     private fun setupObservers() {
         createTodoViewModel.state.observe(viewLifecycleOwner) {
+            clearInputError()
             when (it) {
-                is State.Loading -> {}
+                is State.Loading -> {
+                }
                 is State.Error -> {
+                    if (it.error is TodoException)
+                        processInputError(it.error.fields)
+
                     view?.let { it1 ->
                         {
                             Snackbar.make(
@@ -106,7 +115,7 @@ class CreateTodoFragment : Fragment() {
         }
     }
 
-    private fun setupUI(){
+    private fun setupUI() {
         binding.todoItem = createTodoViewModel.todoItem.value
         binding.fragment = this
         binding.rvCreateSubTodoList.adapter = adapter
@@ -125,6 +134,10 @@ class CreateTodoFragment : Fragment() {
             adapter.addSubTodo(createTodoViewModel.getSubTodoList())
             binding.tilCreateAddSubTodo.editText?.setText("")
         }
+
+        binding.tilCreateTodoEndDate.setStartIconOnClickListener {
+            setupDatePicker(it)
+        }
     }
 
     fun setupDatePicker(v: View) {
@@ -139,8 +152,8 @@ class CreateTodoFragment : Fragment() {
         Dialogs.setupDatePickerDialog(parentFragmentManager, onPositive, onNegative)
     }
 
-    private fun setupDialog(textOnEditText: String, onChange: (EditText) -> (Unit)){
-        Dialogs.setupEditDialog(activity, context, textOnEditText,onChange)
+    private fun setupDialog(textOnEditText: String, onChange: (EditText) -> (Unit)) {
+        Dialogs.setupEditDialog(activity, context, textOnEditText, onChange)
     }
 
     fun saveTodo(v: View) {
@@ -156,6 +169,31 @@ class CreateTodoFragment : Fragment() {
 //            Log.d("DIALOG", "NEW DIALOG -> $text")
 //            adapter.addSubTodo(createTodoViewModel.getSubTodoList())
 //        }
+    }
+
+    private fun processInputError(fields: Map<String, FieldError>?){
+
+        val inputErrorMap = hashMapOf(
+            "name" to binding.tvCreateTiName,
+            "date" to binding.tilCreateTodoEndDate,
+        )
+
+        val processErrorMap = hashMapOf(
+            FieldError.BLANKORNULL to getString(R.string.err_task_name),
+            FieldError.DATEFORMAT to getString(R.string.err_task_date)
+        )
+
+        fields?.forEach {
+            val inputError = it.key
+            val inputTypeError = it.value
+
+            inputErrorMap[inputError]?.error = processErrorMap[inputTypeError]
+        }
+    }
+
+    private fun clearInputError(){
+        binding.tvCreateTiName.error = ""
+        binding.tilCreateTodoEndDate.error = ""
     }
 
 
