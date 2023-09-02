@@ -42,4 +42,7 @@
         <item quantity="one">1 day has passed</item>
         <item quantity="other">%1$d days has passed</item>
     </plurals>
+
+    <string name="err_task_name">Task should have a name</string>
+    <string name="err_task_date">Invalid date.\nIt should be in \'dd/mm/yyyy\' format.</string>
 </resources>
