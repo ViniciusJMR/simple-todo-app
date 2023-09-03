@@ -92,15 +92,14 @@ class CreateTodoFragment : Fragment() {
                     if (it.error is TodoException)
                         processInputError(it.error.fields)
 
-                    view?.let { it1 ->
-                        {
-                            Snackbar.make(
-                                it1,
-                                it.error.message ?: "Erro desconhecido",
-                                Snackbar.LENGTH_SHORT
-                            ).show()
+                    else
+                        view?.let { it1 ->
+                                Snackbar.make(
+                                    it1,
+                                    it.error.message ?: "Erro desconhecido",
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
                         }
-                    }
                 }
 
                 is State.Success -> {
