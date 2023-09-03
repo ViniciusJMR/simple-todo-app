@@ -1,27 +1,24 @@
 package dev.vinicius.todoapp.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import dev.vinicius.todoapp.R
 import dev.vinicius.todoapp.databinding.FragmentEditTodoBinding
 import dev.vinicius.todoapp.domain.dto.TodoItemDTOInput
+import dev.vinicius.todoapp.exception.TodoException
+import dev.vinicius.todoapp.exception.field.FieldError
 import dev.vinicius.todoapp.ui.component.Dialogs
 import dev.vinicius.todoapp.util.State
 import dev.vinicius.todoapp.viewmodel.EditTodoViewModel
 import dev.vinicius.todoapp.viewmodel.SharedViewModel
-import java.time.Instant
-import java.time.LocalDate
-import java.time.ZoneId
-import java.time.ZoneOffset
 
 @AndroidEntryPoint
 class EditTodoFragment : Fragment() {
@@ -47,14 +44,18 @@ class EditTodoFragment : Fragment() {
 
     private fun setupObservers(){
         editTodoViewModel.updateState.observe(viewLifecycleOwner){
+            clearInputError()
             when (it) {
                 is State.Loading -> {}
                 is State.Error -> {
-                    view?.let { view ->
-                        Snackbar
-                            .make(view, it.error.message ?: "Erro desconhecido", Snackbar.LENGTH_SHORT)
-                            .show()
-                    }
+                    if (it.error is TodoException)
+                        processInputError(it.error.fields)
+                    else
+                        view?.let { view ->
+                            Snackbar
+                                .make(view, it.error.message ?: "Erro desconhecido", Snackbar.LENGTH_SHORT)
+                                .show()
+                        }
                 }
                 is State.Success -> {
                     findNavController().navigateUp()
@@ -81,6 +82,10 @@ class EditTodoFragment : Fragment() {
         binding.mtbEditTopBar.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
+
+        binding.tilEditTodoEnddate.setStartIconOnClickListener {
+            setupDatePicker(it)
+        }
     }
 
     fun saveTodo(v: View) {
@@ -97,5 +102,30 @@ class EditTodoFragment : Fragment() {
         }
 
         Dialogs.setupDatePickerDialog(parentFragmentManager, onPositive, onNegative)
+    }
+
+    private fun processInputError(fields: Map<String, FieldError>?){
+
+        val inputErrorMap = hashMapOf(
+            "name" to binding.tilEditTodoName,
+            "date" to binding.tilEditTodoEnddate,
+        )
+
+        val processErrorMap = hashMapOf(
+            FieldError.BLANKORNULL to getString(R.string.err_task_name),
+            FieldError.DATEFORMAT to getString(R.string.err_task_date)
+        )
+
+        fields?.forEach {
+            val inputError = it.key
+            val inputTypeError = it.value
+
+            inputErrorMap[inputError]?.error = processErrorMap[inputTypeError]
+        }
+    }
+
+    private fun clearInputError(){
+        binding.tilEditTodoName.error = ""
+        binding.tilEditTodoEnddate.error = ""
     }
 }
