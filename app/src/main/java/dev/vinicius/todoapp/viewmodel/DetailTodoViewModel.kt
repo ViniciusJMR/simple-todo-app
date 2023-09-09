@@ -29,7 +29,7 @@ class DetailTodoViewModel @Inject constructor(
     private val saveSubTodoUseCase: SaveSubTodoUseCase,
     private val deleteSubTodoUseCase: DeleteSubTodoUseCase,
     private val deleteTodoItemUseCase: DeleteTodoItemUseCase
-): AndroidViewModel(app){
+) : AndroidViewModel(app) {
 
     private val _stateTodo = MutableLiveData<State<TodoItemDTOOutput>>()
     val stateTodo: LiveData<State<TodoItemDTOOutput>> = _stateTodo
@@ -40,7 +40,7 @@ class DetailTodoViewModel @Inject constructor(
     private val _deleteState = MutableLiveData<State<Unit>>()
     val deleteState: LiveData<State<Unit>> = _deleteState
 
-    fun getTodoDetail(id:Long){
+    fun getTodoDetail(id: Long) {
         viewModelScope.launch {
             getTodoDetailById(id)
                 .onStart {
@@ -51,14 +51,14 @@ class DetailTodoViewModel @Inject constructor(
                     _stateTodo.postValue(State.Error(it))
                     _stateSubTodo.postValue(State.Error(it))
                 }
-                .collect{
+                .collect {
                     _stateTodo.postValue(State.Success(it.todoItemOutput))
                     _stateSubTodo.postValue(State.Success(it.subTodoList))
                 }
         }
     }
 
-    fun deleteTodo(id: Long){
+    fun deleteTodo(id: Long) {
         viewModelScope.launch {
             deleteTodoItemUseCase(id)
                 .onStart {
@@ -73,7 +73,7 @@ class DetailTodoViewModel @Inject constructor(
         }
     }
 
-    fun updateSubTodo(subTodo: SubTodoItemShow){
+    fun updateSubTodo(subTodo: SubTodoItemShow) {
         viewModelScope.launch {
             val oldList = getSubTodoList()
             updateSubTodoItemUseCase(subTodo)
@@ -83,22 +83,26 @@ class DetailTodoViewModel @Inject constructor(
                 .catch {
                     _stateSubTodo.postValue(State.Error(it))
                 }
-                .collect{ newSubTodo ->
-                    val oldSubTodo = oldList?.find { subTodo ->
+                .collect { newSubTodo ->
+
+                    oldList?.find { subTodo ->
                         subTodo.id == newSubTodo.id
+                    }.also { oldSubTodo ->
+                        oldSubTodo?.apply {
+                            name = newSubTodo.name
+                            done = newSubTodo.done
+                        }
                     }
-                    oldSubTodo?.name = newSubTodo.name
-                    oldSubTodo?.done = newSubTodo.done
 
                     _stateSubTodo.postValue(State.Success(oldList))
                 }
         }
     }
 
-    fun addSubTodo(subTodoName: String){
+    fun addSubTodo(subTodoName: String) {
         viewModelScope.launch {
             val id = getTodo()!!.id
-            val subTodo = SubTodoItemShow(name=subTodoName, done = false)
+            val subTodo = SubTodoItemShow(name = subTodoName, done = false)
             val pair = Pair(id, subTodo)
             val list = getSubTodoList()
             saveSubTodoUseCase(pair)
@@ -108,7 +112,7 @@ class DetailTodoViewModel @Inject constructor(
                 .catch {
                     _stateSubTodo.postValue(State.Error(it))
                 }
-                .collect{
+                .collect {
                     list?.add(it)
                     _stateSubTodo.postValue(State.Success(list))
                 }
@@ -116,7 +120,7 @@ class DetailTodoViewModel @Inject constructor(
 
     }
 
-    fun deleteSubTodo(subTodo: SubTodoItemShow){
+    fun deleteSubTodo(subTodo: SubTodoItemShow) {
         viewModelScope.launch {
             val list = getSubTodoList()
             deleteSubTodoUseCase(subTodo.id)
@@ -126,7 +130,7 @@ class DetailTodoViewModel @Inject constructor(
                 .catch {
                     _stateSubTodo.postValue(State.Error(it))
                 }
-                .collect{
+                .collect {
                     list?.removeIf {
                         it.id == subTodo.id
                     }
