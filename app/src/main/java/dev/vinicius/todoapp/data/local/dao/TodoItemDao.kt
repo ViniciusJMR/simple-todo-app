@@ -27,8 +27,12 @@ interface TodoItemDao  {
     @Insert(onConflict= OnConflictStrategy.REPLACE)
     suspend fun insert(newTodo: TodoItem): Long
     
-    @Query("UPDATE todoItem SET name=:name, description=:description, endDate=:endDate WHERE id=:id" )
-    suspend fun update(id: Long, name: String, description: String, endDate: LocalDate?)
+    @Query("""
+        UPDATE todoItem 
+        SET name=:name, description=:description, endDate=:endDate, done=:done 
+        WHERE id=:id
+    """ )
+    suspend fun update(id: Long, name: String, description: String, endDate: LocalDate?, done: Boolean)
 
     @Delete
     suspend fun delete(todo: TodoItem)

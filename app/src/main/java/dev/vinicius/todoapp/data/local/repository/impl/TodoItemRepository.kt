@@ -36,8 +36,7 @@ class TodoItemRepository @Inject constructor(
     }
 
     override suspend fun update(item: TodoItem) = flow {
-        todoItemDao.update(item.id, item.name, item.description, item.endDate)
-
+        todoItemDao.update(item.id, item.name, item.description, item.endDate, item.done)
         emit(Unit)
     }
 

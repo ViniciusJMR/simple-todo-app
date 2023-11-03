@@ -10,10 +10,11 @@ import java.util.Locale
 @Entity
 data class TodoItem(
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 0,
-    val name: String,
+    var id: Long = 0,
+    var name: String,
     val creationDate: LocalDate,
-    val endDate: LocalDate?,
-    val description: String,
+    var endDate: LocalDate?,
+    var description: String,
+    var done: Boolean
 ) {
 }

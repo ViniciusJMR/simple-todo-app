@@ -14,7 +14,7 @@ import dev.vinicius.todoapp.util.Converters
 
 @Database(
     entities = [TodoItem::class, SubTodoItem::class],
-    version = 4
+    version = 5
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase: RoomDatabase() {
@@ -63,6 +63,12 @@ abstract class AppDatabase: RoomDatabase() {
             )
             it.execSQL(
                 "ALTER TABLE SubTodoItemAux RENAME TO SubTodoItem"
+            )
+        }
+
+        val MIGRATION_4_5 = Migration(4, 5) {
+            it.execSQL(
+                "ALTER TABLE TodoItem ADD COLUMN done INTEGER NOT NULL DEFAULT 0"
             )
         }
     }
