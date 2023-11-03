@@ -47,7 +47,8 @@ class SaveTodoItemUseCase @Inject constructor(
             name = param.name,
             creationDate = LocalDate.now(),
             endDate = date,
-            description = param.description
+            description = param.description,
+            done = false
         )
         todoItemRepo.insert(newTodoItem).collect { id ->
             param.subTodoList

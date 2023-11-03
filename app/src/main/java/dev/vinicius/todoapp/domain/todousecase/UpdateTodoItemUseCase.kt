@@ -8,12 +8,9 @@ import dev.vinicius.todoapp.exception.field.FieldError
 import dev.vinicius.todoapp.util.UseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import java.text.SimpleDateFormat
-import java.time.DateTimeException
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
-import java.util.Locale
 import javax.inject.Inject
 
 class UpdateTodoItemUseCase @Inject constructor(
@@ -49,7 +46,8 @@ class UpdateTodoItemUseCase @Inject constructor(
                         name = param.name,
                         creationDate = todo.creationDate,
                         endDate = endDate,
-                        description = param.description
+                        description = param.description,
+                        done = param.done
                     )
 
                 repository.update(newTodo)
