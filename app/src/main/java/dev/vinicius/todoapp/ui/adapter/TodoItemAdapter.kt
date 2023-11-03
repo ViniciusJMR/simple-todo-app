@@ -22,6 +22,10 @@ class TodoItemAdapter(
 
     var onShowSubTodosListener: (Long) -> (Unit) = {}
 
+    var handleOnCheckBoxClick: (TodoItemDTODetail, Int) -> (Unit) = {_, _ -> }
+
+    var handleOnCheckBoxLongClick: (TodoItemDTODetail, Int) -> (Unit) = {_, _ -> }
+
     companion object {
         private val TAG = "TODOITEMADAPTER"
     }
@@ -81,6 +85,14 @@ class TodoItemAdapter(
 
         fun onClick(v: View) {
             onClickListener(binding.todoItem!!.id)
+        }
+
+        fun onCheckBoxClick(v: View) {
+            handleOnCheckBoxClick(getItem(adapterPosition), adapterPosition)
+        }
+
+        fun onCheckBoxLongClick(v: View) {
+            handleOnCheckBoxClick(getItem(adapterPosition), adapterPosition)
         }
 
         fun onShow(v: View) {

@@ -18,7 +18,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.vinicius.todoapp.R
 import dev.vinicius.todoapp.core.hideSoftKeyboard
 import dev.vinicius.todoapp.databinding.FragmentMainBinding
+import dev.vinicius.todoapp.exception.SubTodoException
+import dev.vinicius.todoapp.exception.TodoException
 import dev.vinicius.todoapp.ui.adapter.TodoItemAdapter
+import dev.vinicius.todoapp.ui.component.Dialogs
 import dev.vinicius.todoapp.util.State
 import dev.vinicius.todoapp.viewmodel.SharedViewModel
 import dev.vinicius.todoapp.viewmodel.TodoItemViewModel
@@ -37,6 +40,14 @@ class MainFragment : Fragment(){
                 sharedViewModel.selectItem(id)
                 findNavController().navigate(R.id.action_mainFragment_to_detailTodoFragment)
             }
+
+            handleOnCheckBoxClick = { item, position ->
+                todoItemViewModel.updateTodoDone(item)
+            }
+
+//            handleOnCheckBoxLongClick = { item, position ->
+//                todoItemViewModel.updateTodoDone(item, true)
+//            }
         }
     }
 
@@ -51,7 +62,7 @@ class MainFragment : Fragment(){
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMainBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
 
@@ -176,10 +187,26 @@ class MainFragment : Fragment(){
             }
         }
 
-        todoItemViewModel.filteredTodoList.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
-            adapter.notifyDataSetChanged()
+        todoItemViewModel.state.observe(viewLifecycleOwner) {
+            when(it) {
+                is State.Error -> {
+                    Log.d(TAG, "state observe: ${it.error.message}")
+                    adapter.notifyDataSetChanged()
+                    if (it.error is SubTodoException) {
+                        Dialogs.setupDialog(
+                            context,
+                            "${it.error.message}. Hold the checkbox to force save.",
+                        ){}
+                    }
+                }
+                else -> {}
+            }
         }
+
+//        todoItemViewModel.filteredTodoList.observe(viewLifecycleOwner) {
+//            adapter.submitList(it)
+//            adapter.notifyDataSetChanged()
+//        }
     }
 
 

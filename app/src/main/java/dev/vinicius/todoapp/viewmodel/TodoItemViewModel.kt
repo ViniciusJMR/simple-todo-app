@@ -10,10 +10,14 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.vinicius.todoapp.domain.dto.SubTodoItemShow
 import dev.vinicius.todoapp.domain.dto.TodoItemDTODetail
+import dev.vinicius.todoapp.domain.dto.TodoItemDTOFinishTodo
 import dev.vinicius.todoapp.domain.todousecase.DeleteTodoItemUseCase
 import dev.vinicius.todoapp.domain.todousecase.GetAllTodoDetailUseCase
+import dev.vinicius.todoapp.domain.todousecase.UpdateTodoItemDoneUseCase
+import dev.vinicius.todoapp.domain.todousecase.UpdateTodoItemUseCase
 import dev.vinicius.todoapp.util.State
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,9 +27,17 @@ class TodoItemViewModel @Inject constructor(
     app: Application,
     private val getAllTodoDetailUseCase: GetAllTodoDetailUseCase,
     private val deleteTodoItemUseCase: DeleteTodoItemUseCase,
+    private val updateTodoItemDoneUseCase: UpdateTodoItemDoneUseCase
 ): AndroidViewModel(app){
+
+    companion object {
+        val TAG = "TODOITEMVIEWMODEL"
+    }
     private val _todoList = MutableLiveData<State<MutableList<TodoItemDTODetail>>>()
     val todoList: LiveData<State<MutableList<TodoItemDTODetail>>> = _todoList
+
+    private val _state = MutableLiveData<State<Unit>>()
+    val state: LiveData<State<Unit>> = _state
 
     private val _filteredTodoList = MutableLiveData<MutableList<TodoItemDTODetail>?>()
     val filteredTodoList: LiveData<MutableList<TodoItemDTODetail>?> = _filteredTodoList
@@ -40,11 +52,11 @@ class TodoItemViewModel @Inject constructor(
                     _todoList.postValue(State.Loading)
                 }
                 .catch {
-                    Log.e("VIEWMODEL_TAG", it.message ?: "Erro Estranho")
+                    Log.e(TAG, it.message ?: "Erro Estranho")
                     _todoList.postValue(State.Error(it))
                 }
-                .collect{
-                    Log.d("VIEWMODEL", it.toString())
+                .collect {
+                    Log.d(TAG, it.toString())
                     _todoList.postValue(State.Success(it))
                 }
         }
@@ -63,10 +75,29 @@ class TodoItemViewModel @Inject constructor(
                     _todoList.postValue(State.Error(it))
                 }
                 .collect{
-                    list!!.removeIf{ toBeDeleted ->
+                    list.removeIf{ toBeDeleted ->
                         toBeDeleted.todoItemOutput!!.id == id
                     }
                     _todoList.postValue(State.Success(list))
+                }
+        }
+    }
+
+    fun updateTodoDone(todoItem: TodoItemDTODetail, forceSave: Boolean = false) {
+        viewModelScope.launch {
+            val list = getTodoList()
+            val todoDoneDTO = TodoItemDTOFinishTodo(todoItem, forceSave)
+            updateTodoItemDoneUseCase(todoDoneDTO)
+                .catch {
+                    Log.d(TAG, "updateTodoDone(Error): ${it.message}")
+//                    todoItem.todoItemOutput!!.done = false
+                    _state.postValue(State.Error(it))
+//                    _todoList.postValue(State.Success(list))
+                }
+                .collect{
+                    Log.d(TAG, "updateTodoDone: updated successfully")
+//                    _todoList.postValue(State.Success(list))
+                    _state.postValue(State.Success(it))
                 }
         }
     }

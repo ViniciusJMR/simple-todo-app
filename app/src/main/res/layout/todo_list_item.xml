@@ -53,12 +53,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
                     style="@style/TextAppearance.AppCompat.Medium"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:text="@{todoItem.name}"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/mb_todo_show"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/cb_todo_item_done"
                     tools:text="Titulo" />
 
             <TextView
@@ -83,6 +84,17 @@
                     tools:text="1/7 Sub tasks"
 
                     />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cb_todo_item_done"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:longClickable="true"
+                    android:onClick="@{todoItemViewHolder::onCheckBoxClick}"
+                    android:checked="@={todoItem.done}"
+                />
 
 
             <com.google.android.material.divider.MaterialDivider
