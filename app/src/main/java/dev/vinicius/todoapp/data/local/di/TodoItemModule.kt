@@ -4,13 +4,14 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.components.SingletonComponent
 import dev.vinicius.todoapp.data.local.repository.Repository
 import dev.vinicius.todoapp.data.local.repository.impl.SubTodoItemRepository
 import dev.vinicius.todoapp.data.local.repository.impl.TodoItemRepository
 import dev.vinicius.todoapp.data.model.SubTodoItem
 import dev.vinicius.todoapp.data.model.TodoItem
 
-@InstallIn(ViewModelComponent::class)
+@InstallIn(SingletonComponent::class)
 @Module
 abstract class TodoItemModule {
 

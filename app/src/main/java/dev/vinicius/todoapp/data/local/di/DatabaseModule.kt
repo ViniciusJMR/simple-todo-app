@@ -22,12 +22,14 @@ class DatabaseModule {
         AppDatabase.MIGRATION_4_5
     )
 
+    @Singleton
     @Provides
     fun provideChannelDao(appDatabase: AppDatabase) = appDatabase.todoItemDao()
 
+    @Singleton
     @Provides
     fun provideSubTodoDao(appDatabase: AppDatabase) = appDatabase.subTodoDao()
-@Provides
+    @Provides
     @Singleton
     fun provideAppDatabase(@ApplicationContext appContext: Context): AppDatabase =
         Room.databaseBuilder(
