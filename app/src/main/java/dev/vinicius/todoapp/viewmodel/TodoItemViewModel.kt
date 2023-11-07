@@ -12,6 +12,7 @@ import dev.vinicius.todoapp.domain.dto.SubTodoItemShow
 import dev.vinicius.todoapp.domain.dto.TodoItemDTODetail
 import dev.vinicius.todoapp.domain.dto.TodoItemDTOFinishTodo
 import dev.vinicius.todoapp.domain.todousecase.DeleteTodoItemUseCase
+import dev.vinicius.todoapp.domain.todousecase.GetAllNotFinishedTodoUseCase
 import dev.vinicius.todoapp.domain.todousecase.GetAllTodoDetailUseCase
 import dev.vinicius.todoapp.domain.todousecase.UpdateTodoItemDoneUseCase
 import dev.vinicius.todoapp.domain.todousecase.UpdateTodoItemUseCase
@@ -25,13 +26,13 @@ import javax.inject.Inject
 @HiltViewModel
 class TodoItemViewModel @Inject constructor(
     app: Application,
-    private val getAllTodoDetailUseCase: GetAllTodoDetailUseCase,
+    private val getAllNotFinishedTodoUseCase: GetAllNotFinishedTodoUseCase,
     private val deleteTodoItemUseCase: DeleteTodoItemUseCase,
     private val updateTodoItemDoneUseCase: UpdateTodoItemDoneUseCase
 ): AndroidViewModel(app){
 
     companion object {
-        val TAG = "TODOITEMVIEWMODEL"
+        val TAG = "TodoItemViewModel"
     }
     private val _todoList = MutableLiveData<State<MutableList<TodoItemDTODetail>>>()
     val todoList: LiveData<State<MutableList<TodoItemDTODetail>>> = _todoList
@@ -47,7 +48,7 @@ class TodoItemViewModel @Inject constructor(
 
     fun getAll() {
         viewModelScope.launch {
-            getAllTodoDetailUseCase()
+            getAllNotFinishedTodoUseCase()
                 .onStart {
                     _todoList.postValue(State.Loading)
                 }
@@ -96,7 +97,10 @@ class TodoItemViewModel @Inject constructor(
                 }
                 .collect{
                     Log.d(TAG, "updateTodoDone: updated successfully")
-//                    _todoList.postValue(State.Success(list))
+                    list?.removeIf{ todo ->
+                        todo.todoItemOutput?.id == todoItem.todoItemOutput?.id
+                    }
+                    _todoList.postValue(State.Success(list))
                     _state.postValue(State.Success(it))
                 }
         }
