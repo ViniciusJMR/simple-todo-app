@@ -33,10 +33,9 @@ class UpdateTodoItemDoneUseCase @Inject constructor(
             val todo = param.todoDetail.todoItemOutput!!.toEntity()
             it.update(todo)
         }
+    private fun isAllSubTodosFinished(subTodos: List<SubTodoItemShow>): Boolean {
+        val unfinishedSubTodos = subTodos.filter { !it.done }
+        return unfinishedSubTodos.isEmpty()
+    }
 }
 
-
-fun isAllSubTodosFinished(subTodos: List<SubTodoItemShow>): Boolean {
-    val unfinishedSubTodos = subTodos.filter { !it.done }
-    return unfinishedSubTodos.isEmpty()
-}

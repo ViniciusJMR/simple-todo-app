@@ -47,7 +47,7 @@ class UpdateTodoItemUseCase @Inject constructor(
                         creationDate = todo.creationDate,
                         endDate = endDate,
                         description = param.description,
-                        done = param.done
+                        done = todo.done
                     )
 
                 repository.update(newTodo)
