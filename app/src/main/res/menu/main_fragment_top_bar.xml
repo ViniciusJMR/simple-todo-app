@@ -8,4 +8,13 @@
             android:contentDescription="@string/search_on_main_description"
             app:showAsAction="collapseActionView|ifRoom"
             app:actionViewClass="android.widget.SearchView" />
+
+    <item
+            android:id="@+id/main_menu_history"
+            android:title="@string/txt_history"
+            android:icon="@drawable/baseline_history_24"
+            android:contentDescription="@string/txt_history_description"
+            app:showAsAction="collapseActionView|ifRoom"
+            />
+
 </menu>

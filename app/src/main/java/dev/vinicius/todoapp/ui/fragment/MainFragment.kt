@@ -103,6 +103,10 @@ class MainFragment : Fragment(){
 
                     true
                 }
+                R.id.main_menu_history -> {
+                    findNavController().navigate(R.id.action_mainFragment_to_historyFragment)
+                    true
+                }
                 else -> false
             }
         }
